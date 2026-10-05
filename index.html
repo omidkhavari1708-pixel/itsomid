@@ -2,100 +2,145 @@
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OMID — AI × Business</title>
-<meta name="description" content="بلد می‌شی، ولی پول نمی‌شه. من همون فاصله رو یاد می‌دم — طراحی سایت، اتوماسیون و پرسونال برند با هوش مصنوعی.">
-<meta property="og:title" content="OMID — AI × Business">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OMID — AI × Human Creativity</title>
+<meta name="description" content="همه می‌تونن با AI محتوا و سایت بسازن، ولی همه نمی‌دونن چی بسازن. من امیدم؛ درباره خلاقیت، AI و ساختن چیزهایی که قبلاً بهشون فکر نکردیم.">
+<meta property="og:title" content="OMID — AI × Human Creativity">
+<meta property="og:description" content="همه می‌تونن با AI محتوا و سایت بسازن، ولی همه نمی‌دونن چی بسازن.">
 <meta property="og:image" content="assets/hero.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
 </head>
-<body>
+<body class="home">
 
-<header class="hero">
+<header class="hero" data-name="hero">
   <div class="frame">
     <picture>
       <source media="(max-width:760px)" srcset="assets/hero-sm.jpg">
       <img src="assets/hero.jpg" alt="" fetchpriority="high">
     </picture>
     <span class="grain" aria-hidden="true"></span>
-    <span class="badge"><i></i>این ماه یه جای خالی دارم</span>
+    <span class="badge"><i></i>AI ابزار منه. خلاقیت مزیت منه.</span>
   </div>
 
   <div class="title">
-    <h1>OMID</h1>
-    <p class="tag">AI &times; Business</p>
+    <h1><span class="sel-word" data-sel>OMID<span class="sel-box" aria-hidden="true"><i class="h h-tl"></i><i class="h h-tr"></i><i class="h h-bl"></i><i class="h h-br"></i></span></span></h1>
+    <p class="tag">AI &times; Human Creativity</p>
   </div>
 </header>
 
 <div class="marquee" aria-hidden="true">
-  <div class="track"><div class="half"><span class="fa">طراحی سایت</span><b>&bull;</b><span class="en">WEB DESIGN</span><b>&bull;</b><span class="fa">اتوماسیون</span><b>&bull;</b><span class="en">AUTOMATION</span><b>&bull;</b><span class="fa">پرسونال برند</span><b>&bull;</b><span class="en">PERSONAL BRAND</span><b>&bull;</b><span class="fa">هوش مصنوعی</span><b>&bull;</b><span class="en">AI × BUSINESS</span><b>&bull;</b><span class="fa">طراحی سایت</span><b>&bull;</b><span class="en">WEB DESIGN</span><b>&bull;</b><span class="fa">اتوماسیون</span><b>&bull;</b><span class="en">AUTOMATION</span><b>&bull;</b><span class="fa">پرسونال برند</span><b>&bull;</b><span class="en">PERSONAL BRAND</span><b>&bull;</b><span class="fa">هوش مصنوعی</span><b>&bull;</b><span class="en">AI × BUSINESS</span><b>&bull;</b><span class="fa">طراحی سایت</span><b>&bull;</b><span class="en">WEB DESIGN</span><b>&bull;</b><span class="fa">اتوماسیون</span><b>&bull;</b><span class="en">AUTOMATION</span><b>&bull;</b><span class="fa">پرسونال برند</span><b>&bull;</b><span class="en">PERSONAL BRAND</span><b>&bull;</b><span class="fa">هوش مصنوعی</span><b>&bull;</b><span class="en">AI × BUSINESS</span><b>&bull;</b></div><div class="half"><span class="fa">طراحی سایت</span><b>&bull;</b><span class="en">WEB DESIGN</span><b>&bull;</b><span class="fa">اتوماسیون</span><b>&bull;</b><span class="en">AUTOMATION</span><b>&bull;</b><span class="fa">پرسونال برند</span><b>&bull;</b><span class="en">PERSONAL BRAND</span><b>&bull;</b><span class="fa">هوش مصنوعی</span><b>&bull;</b><span class="en">AI × BUSINESS</span><b>&bull;</b><span class="fa">طراحی سایت</span><b>&bull;</b><span class="en">WEB DESIGN</span><b>&bull;</b><span class="fa">اتوماسیون</span><b>&bull;</b><span class="en">AUTOMATION</span><b>&bull;</b><span class="fa">پرسونال برند</span><b>&bull;</b><span class="en">PERSONAL BRAND</span><b>&bull;</b><span class="fa">هوش مصنوعی</span><b>&bull;</b><span class="en">AI × BUSINESS</span><b>&bull;</b><span class="fa">طراحی سایت</span><b>&bull;</b><span class="en">WEB DESIGN</span><b>&bull;</b><span class="fa">اتوماسیون</span><b>&bull;</b><span class="en">AUTOMATION</span><b>&bull;</b><span class="fa">پرسونال برند</span><b>&bull;</b><span class="en">PERSONAL BRAND</span><b>&bull;</b><span class="fa">هوش مصنوعی</span><b>&bull;</b><span class="en">AI × BUSINESS</span><b>&bull;</b></div></div>
+  <div class="track"><div class="half"><span class="fa">فکر کن</span><b>&bull;</b><span class="en">THINK</span><b>&bull;</b><span class="fa">بساز</span><b>&bull;</b><span class="en">CREATE</span><b>&bull;</b><span class="fa">اجرا کن</span><b>&bull;</b><span class="en">BUILD</span><b>&bull;</b><span class="fa">خلاقیت</span><b>&bull;</b><span class="en">AI × HUMAN CREATIVITY</span><b>&bull;</b><span class="fa">فکر کن</span><b>&bull;</b><span class="en">THINK</span><b>&bull;</b><span class="fa">بساز</span><b>&bull;</b><span class="en">CREATE</span><b>&bull;</b><span class="fa">اجرا کن</span><b>&bull;</b><span class="en">BUILD</span><b>&bull;</b><span class="fa">خلاقیت</span><b>&bull;</b><span class="en">AI × HUMAN CREATIVITY</span><b>&bull;</b></div><div class="half"><span class="fa">فکر کن</span><b>&bull;</b><span class="en">THINK</span><b>&bull;</b><span class="fa">بساز</span><b>&bull;</b><span class="en">CREATE</span><b>&bull;</b><span class="fa">اجرا کن</span><b>&bull;</b><span class="en">BUILD</span><b>&bull;</b><span class="fa">خلاقیت</span><b>&bull;</b><span class="en">AI × HUMAN CREATIVITY</span><b>&bull;</b><span class="fa">فکر کن</span><b>&bull;</b><span class="en">THINK</span><b>&bull;</b><span class="fa">بساز</span><b>&bull;</b><span class="en">CREATE</span><b>&bull;</b><span class="fa">اجرا کن</span><b>&bull;</b><span class="en">BUILD</span><b>&bull;</b><span class="fa">خلاقیت</span><b>&bull;</b><span class="en">AI × HUMAN CREATIVITY</span><b>&bull;</b></div></div>
 </div>
 
-<section class="manifest">
-  <p class="big">بلد می‌شی،<br>ولی پول نمی‌شه.</p>
-  <p class="small">من همون فاصله رو یاد می‌دم — از بلد شدن تا اولین مشتری.</p>
+<main>
+<section class="manifest" data-name="manifest">
+  <p class="big">
+    <span class="ln" data-reveal>همه می‌تونن با AI محتوا و سایت بسازن،</span>
+    <span class="ln" data-reveal>ولی همه نمی‌دونن <span class="ink-word">چی<svg class="ink ink-circle" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M158 20C120 5 46 7 20 33 4 52 28 88 98 90c62 2 92-18 88-46-4-22-46-35-94-32-22 1-40 7-50 13"/></svg></span> بسازن.</span>
+  </p>
+  <p class="small" data-reveal>من امیدم؛ درباره خلاقیت، AI و ساختن چیزهایی که قبلاً بهشون فکر نکردیم.</p>
+  <div class="m-cta" data-reveal>
+    <a class="go" href="vs.html"><span>دیدن فرقش</span><span class="ar">←</span></a>
+    <a class="go ghost" href="https://instagram.com/itsomidai.2" target="_blank" rel="noopener noreferrer"><span>اینستاگرام من</span><span class="ar">↗</span></a>
+  </div>
 </section>
 
-<section class="now">
-  <article class="nowcard">
+<section class="idea" aria-label="فلسفه" data-name="idea">
+  <div class="idea-track">
+    <div class="idea-stage">
+      <p class="idea-k en">THE ONLY RULE</p>
+      <p class="idea-text">
+        <span class="idea-ln" data-line>AI ساختن رو</span>
+        <span class="idea-ln" data-line>آسون‌تر کرده.</span>
+        <span class="idea-ln" data-line>اما اینکه چی بسازی،</span>
+        <span class="idea-ln" data-line>هنوز <span class="ink-under">با توئه.<svg class="ink ink-under-svg" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M6 14c50-7 104 5 160-3 46-6 92-5 128 1"/></svg></span></span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="now" data-name="now">
+  <article class="nowcard" data-reveal>
     <header>
       <span class="live"><i></i>LIVE</span>
-      <span class="wk">هفته‌ی جاری</span>
+      <span class="wk">الان دارم روش کار می‌کنم</span>
     </header>
 
-    <p class="head">الان دارم همین سایت رو از صفر می‌سازم.</p>
-    <p class="body">هرچی توی مسیر یاد بگیرم همین‌جا می‌ذارم — با خرابکاری‌هاش. قرار نیست فقط نتیجه‌ی تمیز رو ببینی.</p>
+    <p class="head">الان دارم <span class="en">OMID LAB</span> رو می‌سازم.</p>
+    <p class="body">جایی برای چیزهایی که هنوز اسم مشخصی ندارن. هرچی امتحان می‌کنم همین‌جا می‌ذارم؛ اونایی که جواب دادن، و اونایی که نه.</p>
 
     <ul class="log">
-      <li class="done"><span>طراحی صفحه‌ی اول</span></li>
-      <li class="doing"><span>صفحات خدمات</span></li>
-      <li><span>آنلاین کردن روی گیت‌هاب</span></li>
+      <li class="done"><span>نسخه‌ی جدید همین سایت</span></li>
+      <li class="doing"><span>آزمایش‌های <span class="en">LAB</span></span></li>
+      <li><span>آزمایش‌های بیشتر</span></li>
     </ul>
+    <a class="now-link" href="lab.html">سر بزن به آزمایشگاه <span class="ar">←</span></a>
   </article>
 </section>
 
-<section class="picker c1" id="picker">
+<section class="picker c1" id="picker" data-name="picker">
   <div class="lead">
     <span>می‌خوام راجب</span>
     <div class="reel" id="reel">
       <ul id="reelList">
-        <li class="on">پرسونال برند</li>
-        <li>طراحی سایت</li>
-        <li>اتوماسیون</li>
-        <li>امید</li>
-        <li>چرا AI</li>
+        <li class="on"><i>معمولی و خلاق</i></li>
+        <li><i>فکر، ساخت، اجرا</i></li>
+        <li><i>آزمایشگاه</i></li>
+        <li><i>امید</i></li>
+        <li><i>چرا خلاقیت</i></li>
       </ul>
     </div>
     <span>بدونم</span>
   </div>
 
-  <div class="dots" id="dots" role="tablist" aria-label="انتخاب موضوع"></div>
+  <div class="dots" id="dots" role="tablist" aria-label="انتخاب موضوع">
+    <button type="button" role="tab" aria-current="true" aria-label="معمولی و خلاق"></button>
+    <button type="button" role="tab" aria-current="false" aria-label="فکر، ساخت، اجرا"></button>
+    <button type="button" role="tab" aria-current="false" aria-label="آزمایشگاه"></button>
+    <button type="button" role="tab" aria-current="false" aria-label="امید"></button>
+    <button type="button" role="tab" aria-current="false" aria-label="چرا خلاقیت"></button>
+  </div>
 
-  <a class="go" id="go" href="brand.html">
+  <a class="go" id="go" href="vs.html">
     <span>بریم</span><span class="ar">←</span>
   </a>
 
   <p class="hint">scroll · tap · ↑ ↓</p>
 </section>
 
+<section class="finale" aria-label="امضا" data-name="finale">
+  <p class="f-mark en" data-reveal>OMID</p>
+  <p class="f-sig en" data-reveal>AI × HUMAN CREATIVITY</p>
+  <p class="f-line" data-reveal>ایده خوب، قبل از ساختن شروع می‌شه.</p>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <p class="foot-brand en">OMID <span>AI × HUMAN CREATIVITY</span></p>
+    <p class="foot-rule">AI ابزار منه. خلاقیت مزیت منه.</p>
+    <p class="foot-links en"><a href="https://instagram.com/itsomidai.2" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://t.me/itsomid_ai" target="_blank" rel="noopener noreferrer">Telegram</a></p>
+    <p class="foot-copy en">© 2026 OMID</p>
+  </div>
+</footer>
+
 <nav class="dock" aria-label="ناوبری">
-  <a href="index.html" aria-current="page" data-lbl="خانه" aria-label="خانه">
-    <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></a>
-  <a href="web.html" data-lbl="طراحی سایت" aria-label="طراحی سایت">
-    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></a>
-  <a href="automation.html" data-lbl="اتوماسیون" aria-label="اتوماسیون">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></a>
-  <a href="brand.html" data-lbl="پرسونال برند" aria-label="پرسونال برند">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c.6-3.7 3.3-5.6 6.5-5.6s5.9 1.9 6.5 5.6"/></svg></a>
-  <a href="about.html" data-lbl="امید کیه" aria-label="امید کیه">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".9" fill="currentColor" stroke="none"/></svg></a>
+  <a href="index.html" aria-current="page" data-lbl="خانه" aria-label="خانه"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></a>
+  <a href="vs.html" data-lbl="معمولی و خلاق" aria-label="معمولی و خلاق"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="7.5" height="12" rx="1.6"/><rect x="13.5" y="6" width="7.5" height="12" rx="1.6"/></svg></a>
+  <a href="method.html" data-lbl="فکر، ساخت، اجرا" aria-label="فکر، ساخت، اجرا"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 12h3"/></svg></a>
+  <a href="lab.html" data-lbl="آزمایشگاه" aria-label="آزمایشگاه"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6l-5.5 9.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.4 15h9.2"/></svg></a>
+  <a href="about.html" data-lbl="امید کیه" aria-label="امید کیه"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c.6-3.7 3.3-5.6 6.5-5.6s5.9 1.9 6.5 5.6"/></svg></a>
   <span class="sep"></span>
-  <a href="contact.html" data-lbl="تماس" aria-label="تماس">
-    <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="m4 6 8 6 8-6"/></svg></a>
-  <button id="theme" data-lbl="روشن / تاریک" aria-label="تغییر روشنایی">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/></svg></button>
+  <a href="contact.html" data-lbl="تماس" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 6 8 6 8-6"/></svg></a>
+  <button id="theme" type="button" data-lbl="روشن / تاریک" aria-label="تغییر روشنایی"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/></svg></button>
 </nav>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 </body>
 </html>
