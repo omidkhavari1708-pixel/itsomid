@@ -51,6 +51,29 @@ const reduced = () => REDUCED.matches;
   (document.fonts?.ready ?? Promise.resolve()).then(() => setTimeout(on, reduced() ? 0 : 700));
 })();
 
+/* ── هیرو: لامپ می‌ره تو دستگاه، محتوا از اون طرف بیرون میاد ── */
+(() => {
+  const m = document.querySelector("[data-machine]");
+  if (!m || reduced()) return;
+  const bits = [...m.querySelectorAll(".m-bits i")];
+  const place = () => {
+    const w = m.clientWidth, h = m.clientHeight;
+    bits.forEach((b, i) => {
+      const a = i / (bits.length - 1);
+      b.style.setProperty("--x", `${((0.04 + a * 0.42) * w).toFixed(1)}px`);
+      b.style.setProperty("--y", `${(-(0.05 + (((i * 37) % 10) / 10) * 0.3) * h).toFixed(1)}px`);
+      b.style.setProperty("--d", `${(i % 5) * 0.07}s`);
+    });
+  };
+  place();
+  new ResizeObserver(place).observe(m);
+  const img = m.querySelector("picture img");
+  const loaded = img.complete ? Promise.resolve() : new Promise((r) => img.addEventListener("load", r, { once: true }));
+  loaded.then(() => setTimeout(() => m.classList.add("run"), 900));
+  new IntersectionObserver(([e]) => m.classList.toggle("paused", !e.isIntersecting)).observe(m);
+  document.addEventListener("visibilitychange", () => m.classList.toggle("paused", document.hidden));
+})();
+
 /* ── «هنوز با توئه»: خط‌ها با اسکرول روشن می‌شن ── */
 (() => {
   const track = document.querySelector(".idea-track");

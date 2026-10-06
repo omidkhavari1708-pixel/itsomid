@@ -722,3 +722,59 @@ a{color:inherit;text-decoration:none}
   .idea-track{height:auto}
   .idea-stage{position:static;height:auto;padding-block:clamp(80px,14vh,150px)}
 }
+
+/* ═══════ هیرو: ایده وارد دستگاه می‌شه، محتوا بیرون میاد ═══════
+   همه‌ی مختصات به درصدِ عکس ۱۶۷۲×۷۱۰ هستن، پس روی هر اندازه‌ای جا می‌مونن. */
+.frame.art-frame{aspect-ratio:1672/710;background:#fcfcfc}
+.art-frame .badge{inset-block-start:16px;inset-block-end:auto}
+.m-layer{position:absolute;inset:0;pointer-events:none}
+.frame .m-layer img{position:absolute;inset:auto;object-fit:fill;max-width:none}
+.m-clip{position:absolute;left:0;top:0;width:21.651%;height:100%;overflow:hidden}
+.frame .m-layer .m-bulb{left:13.26%;top:40.845%;width:75.967%;height:36.62%;mix-blend-mode:multiply;transform-origin:50% 94%}
+.m-mouth{position:absolute;left:21.4%;top:58%;width:3.6%;height:19%;border-radius:4px;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,rgba(150,190,255,1),rgba(47,111,255,.65) 60%,transparent)}
+.m-core{position:absolute;left:31.5%;top:50%;width:14%;height:40%;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,rgba(170,205,255,.95),rgba(47,111,255,.55) 55%,transparent)}
+.m-bits{position:absolute;left:50.5%;top:69%;width:0;height:0}
+.m-bits i{position:absolute;left:0;top:0;width:clamp(4px,.7vw,10px);aspect-ratio:1;background:#3d78ff;opacity:0;border-radius:1px}
+.m-bits i:nth-child(3n){background:#9cc0ff}
+.m-bits i:nth-child(4n){background:#fff;box-shadow:0 0 0 1px rgba(47,111,255,.35)}
+.frame .m-layer .m-out{transform-origin:50% 90%}
+.frame .m-layer .m-o1{left:53.529%;top:60.141%;width:8.792%;height:19.718%}
+.frame .m-layer .m-o2{left:63.397%;top:62.676%;width:9.091%;height:18.592%}
+.frame .m-layer .m-o3{left:74.163%;top:62.676%;width:9.689%;height:20.423%}
+.frame .m-layer .m-o4{left:85.347%;top:62.254%;width:10.347%;height:22.535%}
+
+.run .m-bulb{animation:m-bulb 8s infinite}
+.run .m-mouth{animation:m-flash 8s infinite}
+.run .m-core{animation:m-core 8s infinite}
+.run .m-bits i{animation:m-bit 8s infinite;animation-delay:var(--d,0s)}
+.run .m-out{animation:m-pop 8s infinite}
+.run .m-o2{animation-delay:.3s}
+.run .m-o3{animation-delay:.6s}
+.run .m-o4{animation-delay:.9s}
+.paused .m-layer *{animation-play-state:paused!important}
+
+@keyframes m-bulb{
+  0%,6%{transform:none;opacity:1;filter:none;animation-timing-function:cubic-bezier(.55,0,.35,1)}
+  30%{transform:translate(85.45%,-7.3%) scale(.45);opacity:1;filter:brightness(1.15)}
+  31.5%{transform:translate(85.45%,-7.3%) scale(.45);opacity:0}
+  33%,82%{transform:scale(.7);opacity:0;animation-timing-function:cubic-bezier(.16,1,.3,1)}
+  92%,100%{transform:none;opacity:1}
+}
+@keyframes m-flash{0%,27%{opacity:0}31%{opacity:1}42%,100%{opacity:0}}
+@keyframes m-core{0%,30%{opacity:0}36%{opacity:1}43%{opacity:.55}48%{opacity:.9}58%,100%{opacity:0}}
+@keyframes m-bit{
+  0%,40%{transform:translate(0,0) scale(.4);opacity:0}
+  42%{opacity:1}
+  60%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}
+  100%{opacity:0}
+}
+@keyframes m-pop{
+  0%,44%{transform:none;filter:none}
+  47%{transform:translateY(-7%) scale(1.09);filter:brightness(1.12) saturate(1.15);animation-timing-function:cubic-bezier(.34,1.56,.64,1)}
+  53%,100%{transform:none;filter:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .run .m-layer *{animation:none!important}
+}

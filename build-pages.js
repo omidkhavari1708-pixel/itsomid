@@ -14,7 +14,7 @@ const HEAD = (title, desc) => `<meta charset="utf-8">
 <meta name="description" content="${desc}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
-<meta property="og:image" content="assets/hero.jpg">
+<meta property="og:image" content="assets/og.jpg">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>

@@ -9,7 +9,7 @@
 <meta name="description" content="همه می‌تونن با AI محتوا و سایت بسازن، ولی همه نمی‌دونن چی بسازن. من امیدم؛ درباره خلاقیت، AI و ساختن چیزهایی که قبلاً بهشون فکر نکردیم.">
 <meta property="og:title" content="OMID — AI × Human Creativity">
 <meta property="og:description" content="همه می‌تونن با AI محتوا و سایت بسازن، ولی همه نمی‌دونن چی بسازن.">
-<meta property="og:image" content="assets/hero.jpg">
+<meta property="og:image" content="assets/og.jpg">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
@@ -19,11 +19,23 @@
 <body class="home">
 
 <header class="hero" data-name="hero">
-  <div class="frame">
+  <div class="frame art-frame" data-machine>
     <picture>
-      <source media="(max-width:760px)" srcset="assets/hero-sm.jpg">
-      <img src="assets/hero.jpg" alt="" fetchpriority="high">
+      <source media="(max-width:760px)" srcset="assets/hero/base-sm.webp" type="image/webp">
+      <source srcset="assets/hero/base.webp" type="image/webp">
+      <img src="assets/hero/base.jpg" width="1672" height="710" fetchpriority="high"
+        alt="امید پشت یه دستگاه نشسته؛ یه لامپ روی نوار نقاله وارد دستگاه می‌شه و از اون طرف تصویر، ویدیو، موزیک و کد بیرون میاد.">
     </picture>
+    <div class="m-layer" aria-hidden="true">
+      <div class="m-clip"><img class="m-bulb" src="assets/hero/bulb.webp" width="275" height="260" alt=""></div>
+      <span class="m-mouth"></span>
+      <span class="m-core"></span>
+      <span class="m-bits"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <img class="m-out m-o1" src="assets/hero/i-image.webp" width="147" height="140" alt="">
+      <img class="m-out m-o2" src="assets/hero/i-video.webp" width="152" height="132" alt="">
+      <img class="m-out m-o3" src="assets/hero/i-music.webp" width="162" height="145" alt="">
+      <img class="m-out m-o4" src="assets/hero/i-code.webp" width="173" height="160" alt="">
+    </div>
     <span class="grain" aria-hidden="true"></span>
     <span class="badge"><i></i>AI ابزار منه. خلاقیت مزیت منه.</span>
   </div>

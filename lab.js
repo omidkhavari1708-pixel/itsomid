@@ -39,6 +39,7 @@ function initMusic(root) {
   const label = root.querySelector('[data-music-label]');
   const again = root.querySelector('[data-music="new"]');
   const seedOut = root.querySelector('[data-music-seed]');
+  const hint = root.querySelector('.exp-fine');
   const { ctx: g, w, h } = fitCanvas(canvas);
   const INK = css(root, '--ink') || '#08080a';
   const BLUE = css(root, '--accent') || '#1f3cff';
@@ -79,7 +80,7 @@ function initMusic(root) {
   function setup() {
     ac = new (window.AudioContext || window.webkitAudioContext)();
     master = ac.createGain();
-    master.gain.value = 0.2;
+    master.gain.value = 0.6;
     const comp = ac.createDynamicsCompressor();
     analyser = ac.createAnalyser();
     analyser.fftSize = 1024;
@@ -117,6 +118,15 @@ function initMusic(root) {
     o.connect(gn).connect(master);
     env(gn, t, 0.004, 0.32, 0.9);
     o.start(t); o.stop(t + 0.4);
+    // click — phone speakers can't play the low thump, so give it an edge
+    const c = ac.createOscillator();
+    const cg = ac.createGain();
+    c.type = 'triangle';
+    c.frequency.setValueAtTime(1800, t);
+    c.frequency.exponentialRampToValueAtTime(400, t + 0.03);
+    c.connect(cg).connect(master);
+    env(cg, t, 0.001, 0.035, 0.35);
+    c.start(t); c.stop(t + 0.06);
   }
   let noiseBuf = null;
   function hatAt(t, peak) {
@@ -141,15 +151,15 @@ function initMusic(root) {
       const i = step % 16;
       const bar = Math.floor(step / 16) % 4;
       if (song.kick[i]) kickAt(nextTime);
-      if (song.hat[i]) hatAt(nextTime, i % 4 === 2 ? 0.12 : 0.07);
+      if (song.hat[i]) hatAt(nextTime, i % 4 === 2 ? 0.22 : 0.13);
       const b = song.bassLine[i];
-      if (b !== null) tone('triangle', song.deg(song.prog[bar] + b, -1), nextTime, sixteenth * 3, 0.32, { cutoff: 600 });
+      if (b !== null) tone('sawtooth', song.deg(song.prog[bar] + b, -1), nextTime, sixteenth * 3, 0.24, { cutoff: 1100 });
       if (i === 0) {
         const d = song.prog[bar];
-        [0, 2, 4].forEach((k) => tone('sawtooth', song.deg(d + k, 0), nextTime, sixteenth * 15, 0.035, { cutoff: 900 }));
+        [0, 2, 4].forEach((k) => tone('sawtooth', song.deg(d + k, 0), nextTime, sixteenth * 15, 0.06, { cutoff: 1500 }));
       }
       const l = song.lead[step % 64];
-      if (l !== null) tone('sine', song.deg(l, 1), nextTime, sixteenth * 1.6, 0.13, { send: true });
+      if (l !== null) tone('triangle', song.deg(l, 1), nextTime, sixteenth * 1.6, 0.3, { send: true });
       nextTime += sixteenth;
       step++;
     }
@@ -185,16 +195,34 @@ function initMusic(root) {
     }
   }
 
-  function play() {
+  function unlock() {
+    // iOS: treat this as media playback so the ring/silent switch doesn't mute it
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    // older iOS only unlocks audio if something actually starts inside the tap
+    const b = ac.createBuffer(1, 1, 22050);
+    const src = ac.createBufferSource();
+    src.buffer = b;
+    src.connect(ac.destination);
+    src.start(0);
+  }
+  async function play() {
     if (!ac) setup();
-    if (ac.state === 'suspended') ac.resume();
+    unlock();
     playing = true;
-    nextTime = ac.currentTime + 0.06;
+    toggle.setAttribute('aria-pressed', 'true');
+    label.textContent = 'توقف';
+    try { await ac.resume(); } catch (e) {}
+    if (!playing) return;
+    if (ac.state !== 'running') {
+      hint.textContent = 'مرورگر اجازه‌ی پخش صدا رو نداد. یه بار دیگه «پخش» رو بزن.';
+      stop();
+      return;
+    }
+    hint.textContent = 'صدا نمیاد؟ صدای مدیا رو زیاد کن؛ رو آیفون، سایلنت رو هم خاموش کن.';
+    nextTime = ac.currentTime + 0.08;
     step = 0;
     schedule();
     timer = window.setInterval(schedule, 25);
-    toggle.setAttribute('aria-pressed', 'true');
-    label.textContent = 'توقف';
     draw();
   }
   function stop() {
