@@ -18,8 +18,8 @@ const HEAD = (title, desc) => `<meta charset="utf-8">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css">
-<script src="theme.js"></script>`;
+<link rel="stylesheet" href="style.css?v=20261006b">
+<script src="theme.js?v=20261006b"></script>`;
 
 const ICONS = {
   home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
@@ -270,8 +270,8 @@ ${p.faq.map((f) => `    <details class="qa"><summary>${f[0]}<span class="mk" ari
 ${FOOT}
 ${DOCK(p.file)}
 <div class="blueprint" aria-hidden="true"><div class="bp-cols"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-<script src="app.js" defer></script>
-${(p.scripts || []).map((s) => `<script src="${s}" defer></script>`).join("\n")}
+<script src="app.js?v=20261006b" defer></script>
+${(p.scripts || []).map((s) => `<script src="${s}?v=20261006b" defer></script>`).join("\n")}
 </body>
 </html>
 `;
