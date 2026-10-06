@@ -726,7 +726,8 @@ a{color:inherit;text-decoration:none}
 /* ═══════ هیرو: ایده وارد دستگاه می‌شه، محتوا بیرون میاد ═══════
    همه‌ی مختصات به درصدِ عکس ۱۶۷۲×۷۱۰ هستن، پس روی هر اندازه‌ای جا می‌مونن. */
 .frame.art-frame{aspect-ratio:1672/710;background:#fcfcfc}
-.art-frame .badge{inset-block-start:16px;inset-block-end:auto}
+.art-frame .badge{inset-block-start:14px;inset-block-end:auto;inset-inline-start:auto;inset-inline-end:14px}
+@media (max-width:760px){.art-frame .badge{inset-block-start:10px;inset-inline-end:10px;font-size:11px;padding:6px 11px}}
 .m-layer{position:absolute;inset:0;pointer-events:none}
 .frame .m-layer img{position:absolute;inset:auto;object-fit:fill;max-width:none}
 .m-clip{position:absolute;left:0;top:0;width:21.651%;height:100%;overflow:hidden}
