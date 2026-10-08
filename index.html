@@ -10,32 +10,26 @@
 <meta property="og:title" content="OMID — AI × Human Creativity">
 <meta property="og:description" content="همه می‌تونن با AI محتوا و سایت بسازن، ولی همه نمی‌دونن چی بسازن.">
 <meta property="og:image" content="assets/og.jpg">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#CCC8B9">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=20261006b">
-<script src="theme.js?v=20261006b"></script>
+<link rel="stylesheet" href="style.css?v=20261008b">
+<script src="theme.js?v=20261008b"></script>
 </head>
 <body class="home">
 
-<header class="hero" data-name="hero">
-  <div class="frame art-frame" data-machine>
-    <picture>
-      <source media="(max-width:760px)" srcset="assets/hero/base-sm.webp" type="image/webp">
-      <source srcset="assets/hero/base.webp" type="image/webp">
-      <img src="assets/hero/base.jpg" width="1672" height="710" fetchpriority="high"
-        alt="امید پشت یه دستگاه نشسته؛ یه لامپ روی نوار نقاله وارد دستگاه می‌شه و از اون طرف تصویر، ویدیو، موزیک و کد بیرون میاد.">
-    </picture>
-    <div class="m-layer" aria-hidden="true">
-      <div class="m-clip"><img class="m-bulb" src="assets/hero/bulb.webp" width="275" height="260" alt=""></div>
-      <span class="m-mouth"></span>
-      <span class="m-core"></span>
-      <span class="m-bits"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      <img class="m-out m-o1" src="assets/hero/i-image.webp" width="147" height="140" alt="">
-      <img class="m-out m-o2" src="assets/hero/i-video.webp" width="152" height="132" alt="">
-      <img class="m-out m-o3" src="assets/hero/i-music.webp" width="162" height="145" alt="">
-      <img class="m-out m-o4" src="assets/hero/i-code.webp" width="173" height="160" alt="">
+<header class="hero" data-name="hero" data-hero>
+  <div class="frame photo-frame">
+    <div class="p-par">
+      <picture class="p-img">
+        <source media="(max-width:760px)" srcset="assets/hero/photo-sm.webp" type="image/webp">
+        <source srcset="assets/hero/photo.webp" type="image/webp">
+        <img src="assets/hero/photo.jpg" width="1600" height="656" fetchpriority="high"
+          alt="امید با تی‌شرت مشکی جلوی یه دیوار کرمی با نور گرم؛ کنارش امضای دست‌نویس اسمش.">
+      </picture>
     </div>
+    <span class="p-glow" aria-hidden="true"></span>
+    <div class="p-par p-sigpar" aria-hidden="true"><img class="p-sig" src="assets/hero/sig.webp" width="981" height="242" alt=""></div>
     <span class="grain" aria-hidden="true"></span>
     <span class="badge"><i></i>AI ابزار منه. خلاقیت مزیت منه.</span>
   </div>
@@ -153,6 +147,6 @@
   <button id="theme" type="button" data-lbl="روشن / تاریک" aria-label="تغییر روشنایی"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/></svg></button>
 </nav>
 
-<script src="app.js?v=20261006b" defer></script>
+<script src="app.js?v=20261008b" defer></script>
 </body>
 </html>

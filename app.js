@@ -5,27 +5,74 @@ const ROOT = document.documentElement;
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 const reduced = () => REDUCED.matches;
 
-/* ── تم ── */
+/* ── تم: دایره‌ای که از خود دکمه باز می‌شه ── */
 (() => {
   const KEY = "omid-theme";
-  document.getElementById("theme")?.addEventListener("click", () => {
+  const btn = document.getElementById("theme");
+  if (!btn) return;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const apply = (t) => {
+    ROOT.dataset.theme = t;
+    meta?.setAttribute("content", t === "dark" ? "#000000" : "#CCC8B9");
+    try { localStorage.setItem(KEY, t); } catch {}
+  };
+  meta?.setAttribute("content", ROOT.dataset.theme === "dark" ? "#000000" : "#CCC8B9");
+  btn.addEventListener("click", () => {
     const next = ROOT.dataset.theme === "dark" ? "light" : "dark";
-    ROOT.dataset.theme = next;
-    try { localStorage.setItem(KEY, next); } catch {}
+    if (!document.startViewTransition || reduced()) { apply(next); return; }
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    ROOT.classList.add("theming");
+    const vt = document.startViewTransition(() => apply(next));
+    vt.ready.then(() => {
+      ROOT.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 750, easing: "cubic-bezier(.77,0,.18,1)", pseudoElement: "::view-transition-new(root)" }
+      );
+    }).catch(() => {});
+    vt.finished.finally(() => ROOT.classList.remove("theming"));
   });
 })();
 
-/* ── ورود آرام بخش‌ها (یه بار، حداکثر ۸ تا پشت هم) ── */
+/* ── تیترها کلمه‌به‌کلمه ظاهر می‌شن ── */
+const splitWords = (el) => {
+  const parts = [];
+  [...el.childNodes].forEach((n) => {
+    if (n.nodeType === 3) {
+      n.textContent.split(/(\s+)/).forEach((t) => {
+        if (!t) return;
+        if (/^\s+$/.test(t)) { parts.push(document.createTextNode(t)); return; }
+        const s = document.createElement("span");
+        s.className = "w";
+        s.textContent = t;
+        parts.push(s);
+      });
+    } else if (n.nodeType === 1 && n.tagName !== "BR") {
+      const s = document.createElement("span");
+      s.className = "w";
+      s.append(n);
+      parts.push(s);
+    } else parts.push(n);
+  });
+  el.replaceChildren(...parts);
+  el.querySelectorAll(":scope > .w").forEach((w, i) => w.style.setProperty("--i", i));
+  el.classList.add("split");
+  el.setAttribute("data-reveal", "");
+};
+document.querySelectorAll(".manifest .ln, .band h1, .sec > h2, .cta > h2, .f-line, .nowcard .head").forEach(splitWords);
+
+/* ── ورود بخش‌ها (یه بار، حداکثر ۸ تا پشت هم) ── */
 (() => {
-  const items = [...document.querySelectorAll("[data-reveal]")];
+  const items = [...document.querySelectorAll("[data-reveal], .labx")];
   if (reduced() || !("IntersectionObserver" in window)) { items.forEach((el) => el.classList.add("in")); return; }
   const io = new IntersectionObserver((entries) => {
     entries.filter((e) => e.isIntersecting).forEach((e, i) => {
-      e.target.style.setProperty("--d", `${Math.min(i, 7) * 80}ms`);
+      e.target.style.setProperty("--d", `${Math.min(i, 7) * 90}ms`);
       e.target.classList.add("in");
       io.unobserve(e.target);
     });
-  }, { rootMargin: "0px 0px -10% 0px" });
+  }, { rootMargin: "0px 0px -8% 0px" });
   items.forEach((el) => io.observe(el));
 })();
 
@@ -36,42 +83,112 @@ const reduced = () => REDUCED.matches;
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
-      setTimeout(() => e.target.classList.add("drawn"), 450);
+      setTimeout(() => e.target.classList.add("drawn"), 650);
       io.unobserve(e.target);
     });
   }, { rootMargin: "0px 0px -25% 0px" });
   marks.forEach((m) => io.observe(m));
 })();
 
-/* ── قاب انتخاب دور OMID، بعد از لود ── */
+/* ── هیرو: عکس باز می‌شه، OMID بالا میاد، امضا نوشته می‌شه ── */
 (() => {
-  const w = document.querySelector("[data-sel]");
-  if (!w) return;
-  const on = () => w.classList.add("on");
-  (document.fonts?.ready ?? Promise.resolve()).then(() => setTimeout(on, reduced() ? 0 : 700));
+  const hero = document.querySelector("[data-hero]");
+  if (!hero) return;
+  const frame = hero.querySelector(".photo-frame");
+  const sel = hero.querySelector("[data-sel]");
+
+  // OMID → حرف‌به‌حرف
+  const text = [...sel.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+  if (text) {
+    const wrap = document.createElement("span");
+    wrap.className = "letters";
+    [...text.textContent.trim()].forEach((ch, i) => {
+      const l = document.createElement("span");
+      l.className = "l";
+      l.textContent = ch;
+      l.style.setProperty("--i", i);
+      wrap.append(l);
+    });
+    text.replaceWith(wrap);
+  }
+
+  const go = () => {
+    ROOT.classList.add("intro-go");
+    setTimeout(() => sel.classList.add("on"), reduced() ? 0 : 1500);
+  };
+  const img = frame?.querySelector("picture img");
+  const ready = img && !img.complete
+    ? new Promise((r) => { img.addEventListener("load", r, { once: true }); img.addEventListener("error", r, { once: true }); })
+    : Promise.resolve();
+  Promise.race([Promise.all([ready, document.fonts?.ready]), new Promise((r) => setTimeout(r, 1800))])
+    .then(() => setTimeout(go, 40));
+
+  if (!frame || reduced()) return;
+  const par = frame.querySelector(".p-par");
+  const sig = frame.querySelector(".p-sigpar");
+  const glow = frame.querySelector(".p-glow");
+
+  // نور و عمق با حرکت موس (فقط موس، نه لمس)
+  const target = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
+  let sy = 0, raf = 0;
+  const loop = () => {
+    raf = 0;
+    cur.x += (target.x - cur.x) * 0.08;
+    cur.y += (target.y - cur.y) * 0.08;
+    par.style.transform = `translate3d(${(cur.x * -10).toFixed(2)}px, ${(cur.y * -8 + sy * 0.16).toFixed(2)}px, 0)`;
+    sig.style.transform = `translate3d(${(cur.x * 16).toFixed(2)}px, ${(cur.y * 10 + sy * 0.05).toFixed(2)}px, 0)`;
+    glow.style.setProperty("--mx", `${(76 + cur.x * 14).toFixed(2)}%`);
+    glow.style.setProperty("--my", `${(36 + cur.y * 16).toFixed(2)}%`);
+    if (Math.abs(target.x - cur.x) > 0.002 || Math.abs(target.y - cur.y) > 0.002) raf = requestAnimationFrame(loop);
+  };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+  if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    frame.addEventListener("pointermove", (e) => {
+      const r = frame.getBoundingClientRect();
+      target.x = (e.clientX - r.left) / r.width - 0.5;
+      target.y = (e.clientY - r.top) / r.height - 0.5;
+      kick();
+    });
+    frame.addEventListener("pointerleave", () => { target.x = 0; target.y = 0; kick(); });
+  }
+  // اسکرول: عکس آروم‌تر از صفحه حرکت می‌کنه
+  addEventListener("scroll", () => {
+    sy = Math.min(scrollY, frame.offsetHeight * 1.4);
+    kick();
+  }, { passive: true });
 })();
 
-/* ── هیرو: لامپ می‌ره تو دستگاه، محتوا از اون طرف بیرون میاد ── */
+/* ── نوار متحرک: با اسکرول تندتر می‌شه ── */
 (() => {
-  const m = document.querySelector("[data-machine]");
-  if (!m || reduced()) return;
-  const bits = [...m.querySelectorAll(".m-bits i")];
-  const place = () => {
-    const w = m.clientWidth, h = m.clientHeight;
-    bits.forEach((b, i) => {
-      const a = i / (bits.length - 1);
-      b.style.setProperty("--x", `${((0.04 + a * 0.42) * w).toFixed(1)}px`);
-      b.style.setProperty("--y", `${(-(0.05 + (((i * 37) % 10) / 10) * 0.3) * h).toFixed(1)}px`);
-      b.style.setProperty("--d", `${(i % 5) * 0.07}s`);
-    });
+  const track = document.querySelector(".marquee .track");
+  if (!track || reduced() || !track.getAnimations) return;
+  let last = scrollY, v = 0, raf = 0;
+  const tick = () => {
+    raf = 0;
+    const anim = track.getAnimations()[0];
+    if (!anim) return;
+    v *= 0.92;
+    anim.playbackRate = 1 + v;
+    if (v > 0.02) raf = requestAnimationFrame(tick); else anim.playbackRate = 1;
   };
-  place();
-  new ResizeObserver(place).observe(m);
-  const img = m.querySelector("picture img");
-  const loaded = img.complete ? Promise.resolve() : new Promise((r) => img.addEventListener("load", r, { once: true }));
-  loaded.then(() => setTimeout(() => m.classList.add("run"), 900));
-  new IntersectionObserver(([e]) => m.classList.toggle("paused", !e.isIntersecting)).observe(m);
-  document.addEventListener("visibilitychange", () => m.classList.toggle("paused", document.hidden));
+  addEventListener("scroll", () => {
+    const d = Math.abs(scrollY - last);
+    last = scrollY;
+    v = Math.min(6, v + d / 45);
+    if (!raf) raf = requestAnimationFrame(tick);
+  }, { passive: true });
+})();
+
+/* ── دکمه‌ها: یه کشش آهنربایی ملایم زیر موس ── */
+(() => {
+  if (reduced() || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  document.querySelectorAll(".go").forEach((b) => {
+    b.addEventListener("pointermove", (e) => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1)}px, ${((e.clientY - r.top - r.height / 2) * 0.3).toFixed(1)}px)`;
+    });
+    b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+  });
 })();
 
 /* ── «هنوز با توئه»: خط‌ها با اسکرول روشن می‌شن ── */

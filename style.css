@@ -3,27 +3,21 @@
 @font-face{font-family:Poppins;src:url("fonts/poppins-600.woff2") format("woff2");font-weight:600;font-display:swap}
 
 :root{
-  --ink:#0C0D0F;        /* متن تیره */
-  --paper:#FFFFFF;      /* کاغذ */
-  --line:#E4E2DC;
-  --dim:#8A8A93;
-  --dock-bg:rgba(255,255,255,.62);
-  --dock-br:rgba(12,13,15,.10);
-  --dock-fg:#0C0D0F;
-  --grid:rgba(12,13,15,.055);
+  /* پالت: کرمی، مشکی، قرمز-نارنجی */
+  --ink:#000000; --paper:#CCC8B9; --card:#D6D2C4; --line:#ADA99B; --dim:#4F4C44;
+  --accent:#F5332C;            /* پر کردن، خط، شکل */
+  --accent-text:#9E1510;       /* متن کوچیک قرمز روی کرمی (کنتراست کافی) */
+  --on-accent:#000000;
+  --dock-bg:rgba(204,200,185,.74); --dock-br:rgba(0,0,0,.12); --dock-fg:#000000;
+  --grid:rgba(0,0,0,.06);
 }
 :root[data-theme="dark"]{
-  --ink:#F2F1ED; --paper:#0A0B0C; --line:#202226; --dim:#7C7C86;
-  --dock-bg:rgba(10,11,12,.62); --dock-br:rgba(242,241,237,.12); --dock-fg:#F2F1ED;
-  --grid:rgba(242,241,237,.06);
+  --ink:#CCC8B9; --paper:#000000; --card:#0E0E0D; --line:#2E2D29; --dim:#8F8B80;
+  --accent:#F5332C; --accent-text:#F5332C; --on-accent:#000000;
+  --dock-bg:rgba(0,0,0,.66); --dock-br:rgba(204,200,185,.14); --dock-fg:#CCC8B9;
+  --grid:rgba(204,200,185,.07);
 }
-
-/* رنگ هر گزینه */
-.c1{--accent:#3E8E4E}  /* سبز چمنی — پرسونال برند */
-.c2{--accent:#2F6FB5}  /* آبی — طراحی سایت */
-.c3{--accent:#C4622D}  /* نارنجی — اتوماسیون */
-.c4{--accent:#7B4BA8}  /* بنفش — امید کیه */
-.c5{--accent:#B5354C}  /* قرمز — چرا AI */
+.c1,.c2,.c3,.c4,.c5{--accent:#F5332C}
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -54,9 +48,9 @@ a{color:inherit;text-decoration:none}
   background:rgba(255,255,255,.80);backdrop-filter:blur(16px) saturate(1.5);
   -webkit-backdrop-filter:blur(16px) saturate(1.5);
   color:#0C0D0F;box-shadow:0 6px 22px rgba(12,13,15,.16)}
-.badge i{width:7px;height:7px;border-radius:50%;background:#3E8E4E;flex:none;
-  box-shadow:0 0 0 0 rgba(62,142,78,.6);animation:pulse 2.4s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(62,142,78,0)}100%{box-shadow:0 0 0 0 rgba(62,142,78,0)}}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;
+  box-shadow:0 0 0 0 rgba(245,51,44,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(245,51,44,0)}100%{box-shadow:0 0 0 0 rgba(245,51,44,0)}}
 
 .hero .title{text-align:center}
 .hero h1{font-family:Poppins,sans-serif;font-weight:600;direction:ltr;
@@ -76,7 +70,7 @@ a{color:inherit;text-decoration:none}
 .marquee span.fa{font-family:Nimkat,sans-serif;direction:rtl;letter-spacing:0}
 .marquee span{font-size:clamp(12px,1.5vw,16px);
   letter-spacing:.24em;color:var(--dim);direction:ltr}
-.marquee b{color:var(--accent,#3E8E4E);font-size:12px}
+.marquee b{color:var(--accent,var(--accent));font-size:12px}
 @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .marquee:hover .track{animation-play-state:paused}
 
@@ -94,12 +88,12 @@ a{color:inherit;text-decoration:none}
   background:color-mix(in srgb,var(--paper) 74%,transparent);backdrop-filter:blur(12px);
   display:flex;flex-direction:column;gap:16px;overflow:hidden}
 .nowcard::before{content:"";position:absolute;inset-inline:0;inset-block-start:0;height:2px;
-  background:linear-gradient(90deg,transparent,#3E8E4E,transparent);opacity:.7}
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.7}
 .nowcard header{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .nowcard .live{display:inline-flex;align-items:center;gap:7px;font-family:Poppins,sans-serif;
-  font-size:10px;letter-spacing:.24em;color:#3E8E4E;direction:ltr}
-.nowcard .live i{width:6px;height:6px;border-radius:50%;background:#3E8E4E;
-  box-shadow:0 0 0 0 rgba(62,142,78,.55);animation:pulse 2.4s infinite}
+  font-size:10px;letter-spacing:.24em;color:var(--accent-text);direction:ltr}
+.nowcard .live i{width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 0 rgba(245,51,44,.55);animation:pulse 2.4s infinite}
 .nowcard .wk{font-size:12px;color:var(--dim);direction:rtl}
 .nowcard .head{font-size:clamp(18px,2.4vw,26px);line-height:1.85;direction:rtl;text-align:right}
 .nowcard .body{font-size:clamp(14px,1.7vw,16px);line-height:2.1;color:var(--dim);
@@ -110,10 +104,10 @@ a{color:inherit;text-decoration:none}
 .nowcard .log li::before{content:"";position:absolute;inset-inline-start:0;top:.42em;
   width:9px;height:9px;border-radius:50%;border:1.5px solid var(--line)}
 .nowcard .log li.done{color:var(--ink)}
-.nowcard .log li.done::before{background:#3E8E4E;border-color:#3E8E4E}
+.nowcard .log li.done::before{background:var(--accent);border-color:var(--accent-text)}
 .nowcard .log li.doing{color:var(--ink)}
-.nowcard .log li.doing::before{border-color:#3E8E4E;
-  box-shadow:inset 0 0 0 2px var(--paper),0 0 0 3px rgba(62,142,78,.18)}
+.nowcard .log li.doing::before{border-color:var(--accent-text);
+  box-shadow:inset 0 0 0 2px var(--paper),0 0 0 3px rgba(245,51,44,.18)}
 
 @media (max-width:760px){
   .hero{padding-top:56px}
@@ -184,7 +178,7 @@ a{color:inherit;text-decoration:none}
 
 /* دکمه */
 .go{display:inline-flex;align-items:center;gap:12px;padding:16px 34px;border-radius:99px;
-  background:var(--accent);color:#fff;font-size:17px;border:0;cursor:pointer;
+  background:var(--accent);color:var(--on-accent);font-size:17px;border:0;cursor:pointer;
   transition:transform .3s,box-shadow .3s,background .5s;
   box-shadow:0 10px 30px color-mix(in srgb,var(--accent) 34%,transparent)}
 .go:hover{transform:translateY(-2px);
@@ -221,7 +215,7 @@ a{color:inherit;text-decoration:none}
   direction:ltr;transition:color .3s}
 .back:hover{color:var(--ink)}
 .band .kicker{font-family:Poppins,sans-serif;font-size:11px;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--accent);direction:ltr}
+  text-transform:uppercase;color:var(--accent-text);direction:ltr}
 .band .row{display:grid;grid-template-columns:1fr auto;gap:clamp(20px,5vw,60px);
   align-items:end}
 .band h1{font-size:clamp(30px,5.6vw,68px);line-height:1.42;direction:rtl;
@@ -245,13 +239,13 @@ a{color:inherit;text-decoration:none}
 .index a{display:block;padding:9px 12px;border-radius:9px;font-size:13px;direction:rtl;
   color:var(--dim);transition:all .3s;border-inline-end:2px solid transparent}
 .index a:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 6%,transparent)}
-.index a.on{color:var(--accent);border-inline-end-color:var(--accent);
+.index a.on{color:var(--accent-text);border-inline-end-color:var(--accent);
   background:color-mix(in srgb,var(--accent) 8%,transparent)}
 
 .sec{padding:clamp(44px,7vh,84px) 0;scroll-margin-top:30px}
 .sec + .sec{border-top:1px solid var(--line)}
 .sec .lbl{font-family:Poppins,sans-serif;font-size:10px;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--accent);direction:ltr;margin-bottom:14px}
+  text-transform:uppercase;color:var(--accent-text);direction:ltr;margin-bottom:14px}
 .sec h2{font-size:clamp(21px,3vw,36px);line-height:1.6;direction:rtl;text-align:right;
   margin-bottom:14px}
 .sec p{direction:rtl;text-align:right;line-height:2.15;color:var(--dim);
@@ -265,7 +259,7 @@ a{color:inherit;text-decoration:none}
   transition:border-color .35s,background .35s,transform .35s;background:var(--paper)}
 .list li:hover{border-color:color-mix(in srgb,var(--accent) 40%,transparent);
   background:color-mix(in srgb,var(--accent) 4%,var(--paper));transform:translateY(-2px)}
-.list .n{font-family:Poppins,sans-serif;font-size:11px;color:var(--accent);
+.list .n{font-family:Poppins,sans-serif;font-size:11px;color:var(--accent-text);
   letter-spacing:.16em;display:block;margin-bottom:10px;direction:ltr}
 .list h3{font-size:clamp(15px,1.9vw,19px);direction:rtl;text-align:right;margin-bottom:7px}
 .list p{font-size:14px;line-height:1.95;margin:0}
@@ -277,7 +271,7 @@ a{color:inherit;text-decoration:none}
   border-bottom:1px solid var(--line);direction:rtl}
 .vs .cap i{width:7px;height:7px;border-radius:50%;flex:none}
 .vs.bad .cap i,.vs figure.bad .cap i{background:#C4545A}
-.vs figure.good .cap i{background:#3E8E4E}
+.vs figure.good .cap i{background:var(--accent)}
 .vs .win{padding:18px;display:flex;flex-direction:column;gap:9px;min-height:172px;
   background:color-mix(in srgb,var(--ink) 3%,var(--paper))}
 .vs .bar{height:9px;border-radius:4px;background:color-mix(in srgb,var(--ink) 11%,transparent)}
@@ -296,7 +290,7 @@ a{color:inherit;text-decoration:none}
   justify-content:space-between;align-items:center;gap:18px;direction:rtl;
   font-size:clamp(14px,1.8vw,18px)}
 .qa summary::-webkit-details-marker{display:none}
-.qa .mk{color:var(--accent);font-family:Poppins,sans-serif;transition:transform .35s;flex:none}
+.qa .mk{color:var(--accent-text);font-family:Poppins,sans-serif;transition:transform .35s;flex:none}
 .qa[open] .mk{transform:rotate(45deg)}
 .qa .bd{direction:rtl;text-align:right;color:var(--dim);font-size:14px;line-height:2.15;
   padding:0 2px 22px;max-width:64ch;margin-inline-start:auto}
@@ -317,7 +311,6 @@ a{color:inherit;text-decoration:none}
    همه‌چیز از متغیرهای خود سایت میاد (--ink, --paper, --line, --dim, --accent)
    تا حالت تاریک و رنگ هر صفحه خودبه‌خود درست بمونه.
    ════════════════════════════════════════════════════════════════════ */
-.home{--accent:#2F6FB5}
 .qa-list{margin-top:26px}
 
 /* ورود آرام */
@@ -333,11 +326,11 @@ a{color:inherit;text-decoration:none}
 .chip{display:inline-flex;align-items:center;min-height:36px;padding:0 16px;border-radius:99px;
   border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:13px;cursor:pointer;
   transition:border-color .2s,color .2s}
-.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip:hover{border-color:var(--accent);color:var(--accent-text)}
 
 /* ───── خط‌خطی دستی ───── */
 .ink{position:absolute;overflow:visible;pointer-events:none;fill:none;
-  stroke:var(--accent,#2F6FB5);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .ink path{stroke-dasharray:1;stroke-dashoffset:0}
 .js .ink path{stroke-dashoffset:1;opacity:0;transition:opacity .15s}
 .js .drawn .ink path,.js .ink.drawn path{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset .9s cubic-bezier(.6,.05,.3,1),opacity .1s}
@@ -347,7 +340,7 @@ a{color:inherit;text-decoration:none}
 .ink-under-svg{inset-inline:-2%;bottom:-.1em;width:104%;height:.28em}
 
 /* ───── قاب انتخاب (مثل نرم‌افزار طراحی) ───── */
-.h{position:absolute;width:9px;height:9px;background:var(--paper);border:1.5px solid var(--accent,#2F6FB5)}
+.h{position:absolute;width:9px;height:9px;background:var(--paper);border:1.5px solid var(--accent)}
 .h-tl{top:-5px;left:-5px}.h-tr{top:-5px;right:-5px}.h-bl{bottom:-5px;left:-5px}.h-br{bottom:-5px;right:-5px}
 .sel-word{position:relative;display:inline-block}
 .sel-box{position:absolute;inset:-.06em -.1em -.02em;border:1.5px solid var(--accent);pointer-events:none;
@@ -391,7 +384,7 @@ a{color:inherit;text-decoration:none}
 .foot-brand span{font-weight:400;color:var(--dim);font-size:10px;letter-spacing:.3em;margin-inline-start:10px}
 .foot-links{display:flex;gap:20px;direction:ltr;justify-content:flex-end}
 .foot-links a{color:var(--ink);transition:color .2s}
-.foot-links a:hover{color:var(--accent,#2F6FB5)}
+.foot-links a:hover{color:var(--accent-text)}
 .foot-copy{direction:ltr;text-align:right;font-size:12px}
 @media (min-width:900px){
   .foot-in{grid-template-columns:auto 1fr auto auto;align-items:center;gap:40px}
@@ -409,12 +402,12 @@ a{color:inherit;text-decoration:none}
 .cmp{display:grid;gap:18px;align-items:center}
 .pane-lbl{display:inline-block;margin-bottom:12px;font-size:13px;line-height:1;padding:8px 13px 7px;border-radius:99px;
   background:color-mix(in srgb,var(--ink) 6%,var(--paper));color:var(--dim)}
-.pane-lbl.on{background:var(--accent);color:#fff}
+.pane-lbl.on{background:var(--accent);color:var(--on-accent)}
 .cmp .pane-cap{margin-top:14px;font-size:14px;line-height:2;color:var(--dim);max-width:46ch}
 .cmp .cmp-pivot{position:relative;display:flex;align-items:center;gap:12px;font-size:clamp(20px,2.2vw,26px);line-height:1.4;color:var(--ink)}
 .cmp-pivot .ink-arrow{position:relative;width:62px;height:22px;flex:none;transform:rotate(-90deg)}
 .cmp .cmp-diff{font-size:clamp(16px,1.9vw,20px);line-height:1.9;color:var(--ink)}
-.cmp-diff b{font-weight:400;color:var(--accent)}
+.cmp-diff b{font-weight:400;color:var(--accent-text)}
 @media (min-width:900px){
   .cmp{grid-template-columns:4fr 2fr 6fr;column-gap:22px}
   .cmp .cmp-pivot{flex-direction:column;text-align:center;font-size:clamp(17px,1.6vw,22px)}
@@ -447,7 +440,7 @@ a{color:inherit;text-decoration:none}
 .drop{position:relative;padding:clamp(12px,2vw,24px)}
 .drop-svg{display:block;width:100%;height:auto;overflow:visible}
 .drop-measure path{fill:none;stroke:var(--accent);stroke-width:1.2}
-.drop-cm{direction:ltr;font-family:Poppins,sans-serif;font-size:11px;fill:var(--accent);letter-spacing:.06em}
+.drop-cm{direction:ltr;font-family:Poppins,sans-serif;font-size:11px;fill:var(--accent-text);letter-spacing:.06em}
 .drop-phone rect{fill:var(--ink)}
 .drop-phone .drop-screen{fill:color-mix(in srgb,var(--accent) 55%,var(--ink))}
 .drop-lines{fill:none;stroke:var(--line);stroke-width:2;stroke-linecap:round;transition:opacity .2s}
@@ -472,7 +465,7 @@ a{color:inherit;text-decoration:none}
 .mc-list i{flex:1;border-bottom:1.5px dotted var(--line);transform:translateY(-4px)}
 .mc-list b{font-weight:400}
 .mc-pick .ink-circle{inset:-10% auto -10% -14px;width:62%;height:120%}
-.menu-card .mc-note{position:absolute;top:clamp(96px,11vw,124px);right:clamp(14px,3vw,34px);color:var(--accent);font-size:16px;
+.menu-card .mc-note{position:absolute;top:clamp(96px,11vw,124px);right:clamp(14px,3vw,34px);color:var(--accent-text);font-size:16px;
   transform:rotate(-7deg);opacity:0;transition:opacity .4s}
 .menu-card.drawn .mc-note{opacity:1;transition-delay:.7s}
 .menu-card .mc-copy{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:clamp(20px,2.2vw,28px);line-height:1.6;color:var(--ink)}
@@ -508,7 +501,7 @@ a{color:inherit;text-decoration:none}
   transition:transform .48s cubic-bezier(.16,1,.3,1),width .48s cubic-bezier(.16,1,.3,1),height .48s cubic-bezier(.16,1,.3,1),opacity .3s}
 .mini-frame.on{opacity:1}
 .mini-frame b{position:absolute;bottom:100%;right:-1.5px;margin-bottom:5px;padding:5px 7px 4px;border-radius:3px;
-  background:var(--accent);color:#fff;font-weight:400;font-size:11px;line-height:1;white-space:nowrap}
+  background:var(--accent);color:var(--on-accent);font-weight:400;font-size:11px;line-height:1;white-space:nowrap}
 
 /* CREATE */
 .create{padding:clamp(18px,2.4vw,32px)}
@@ -613,7 +606,7 @@ a{color:inherit;text-decoration:none}
 @media (hover:hover){
   .social:hover::after{transform:scaleX(1)}
   .social:hover .s-name,.social:hover .s-handle{transform:translateX(12px)}
-  .social:hover .s-handle,.social:hover .s-arrow{color:var(--accent)}
+  .social:hover .s-handle,.social:hover .s-arrow{color:var(--accent-text)}
   .social:hover .s-arrow{transform:translate(6px,-6px)}
 }
 .social:focus-visible::after{transform:scaleX(1)}
@@ -621,7 +614,7 @@ a{color:inherit;text-decoration:none}
 /* ═══════ آزمایشگاه ═══════ */
 .status{display:inline-flex;align-items:center;gap:6px;justify-self:start;font-size:12px;line-height:1;padding:6px 10px 5px;border-radius:99px;white-space:nowrap}
 .status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.status.testing{background:color-mix(in srgb,var(--accent) 12%,var(--paper));color:var(--accent)}
+.status.testing{background:color-mix(in srgb,var(--accent) 12%,var(--paper));color:var(--accent-text)}
 .status.done{background:color-mix(in srgb,var(--ink) 6%,var(--paper));color:var(--ink)}
 .status.always{background:var(--ink);color:var(--paper)}
 .live-dot{position:relative;display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
@@ -636,7 +629,7 @@ a{color:inherit;text-decoration:none}
 .node-a{display:grid;gap:8px;padding:18px 20px 16px;border-radius:14px;background:var(--paper);border:1px solid var(--line);
   box-shadow:0 8px 24px -14px rgba(12,13,15,.25);transition:box-shadow .3s,border-color .3s,transform .3s}
 .node-a:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));transform:translateY(-2px);box-shadow:0 18px 40px -18px rgba(12,13,15,.32)}
-.n-cat{font-family:Poppins,sans-serif;font-size:10.5px;letter-spacing:.18em;color:var(--accent);direction:ltr;text-align:right}
+.n-cat{font-family:Poppins,sans-serif;font-size:10.5px;letter-spacing:.18em;color:var(--accent-text);direction:ltr;text-align:right}
 .n-title{font-size:18px;line-height:1.6}
 .n-viz{display:block;height:40px}
 .n-viz.bars{display:flex;align-items:center;gap:4px;direction:ltr}
@@ -649,7 +642,7 @@ a{color:inherit;text-decoration:none}
   radial-gradient(circle at 70% 60%,var(--line) 0 1.5px,transparent 2px) 0 0/5px 5px,color-mix(in srgb,var(--ink) 4%,var(--paper))}
 .n-viz.combo{display:flex;align-items:center;gap:8px;font-size:15px}
 .n-viz.combo i{font-style:normal;padding:0 10px;line-height:28px;border-radius:99px;background:color-mix(in srgb,var(--ink) 6%,var(--paper))}
-.n-viz.combo b{font-weight:400;color:var(--accent)}
+.n-viz.combo b{font-weight:400;color:var(--accent-text)}
 .n-viz.strike{font-size:16px;line-height:40px;color:var(--dim)}
 .n-viz.strike s{text-decoration-color:var(--accent);text-decoration-thickness:2px}
 .n-viz.cols{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
@@ -685,13 +678,13 @@ a{color:inherit;text-decoration:none}
 .field-in.area{resize:vertical;min-height:120px}
 .exp .combo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:clamp(22px,3vw,32px);line-height:1.6;color:var(--ink);
   padding:20px;border-radius:14px;background:color-mix(in srgb,var(--ink) 4%,var(--paper));min-height:7.5rem}
-.combo-x{color:var(--accent)}
+.combo-x{color:var(--accent-text)}
 .combo-b{color:var(--dim)}
 .combo.is-shuffling > span:not(.combo-x){animation:flick .26s}
 @keyframes flick{from{opacity:0;transform:translateY(6px)}}
 .kept{list-style:none;display:grid;gap:6px;counter-reset:k;font-size:15px}
 .kept li{counter-increment:k;display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
-.kept li::before{content:counter(k);color:var(--accent);min-width:1.2em}
+.kept li::before{content:counter(k);color:var(--accent-text);min-width:1.2em}
 .exp .cliche-out{font-size:18px;line-height:2.1;color:var(--ink);padding:16px 20px;border-radius:14px;
   background:color-mix(in srgb,var(--ink) 4%,var(--paper));min-height:4rem}
 .cliche__hit{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2.5px}
@@ -711,7 +704,7 @@ a{color:inherit;text-decoration:none}
 @media (min-width:768px){.bp-cols{grid-template-columns:repeat(12,1fr)}.bp-cols i:nth-child(n+5){display:block}}
 .is-blueprint [data-name]{position:relative;outline:1px dashed var(--accent);outline-offset:-1px}
 .is-blueprint [data-name]::before{content:attr(data-name);position:absolute;top:0;left:0;z-index:61;padding:3px 7px 2px;
-  font-family:Poppins,sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;direction:ltr;background:var(--accent);color:#fff}
+  font-family:Poppins,sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;direction:ltr;background:var(--accent);color:var(--on-accent)}
 
 /* حرکت کمتر */
 @media (prefers-reduced-motion:reduce){
@@ -723,59 +716,133 @@ a{color:inherit;text-decoration:none}
   .idea-stage{position:static;height:auto;padding-block:clamp(80px,14vh,150px)}
 }
 
-/* ═══════ هیرو: ایده وارد دستگاه می‌شه، محتوا بیرون میاد ═══════
-   همه‌ی مختصات به درصدِ عکس ۱۶۷۲×۷۱۰ هستن، پس روی هر اندازه‌ای جا می‌مونن. */
-.frame.art-frame{aspect-ratio:1672/710;background:#fcfcfc}
-.art-frame .badge{inset-block-start:14px;inset-block-end:auto;inset-inline-start:auto;inset-inline-end:14px}
-@media (max-width:760px){.art-frame .badge{inset-block-start:10px;inset-inline-end:10px;font-size:11px;padding:6px 11px}}
-.m-layer{position:absolute;inset:0;pointer-events:none}
-.frame .m-layer img{position:absolute;inset:auto;object-fit:fill;max-width:none}
-.m-clip{position:absolute;left:0;top:0;width:21.651%;height:100%;overflow:hidden}
-.frame .m-layer .m-bulb{left:13.26%;top:40.845%;width:75.967%;height:36.62%;mix-blend-mode:multiply;transform-origin:50% 94%}
-.m-mouth{position:absolute;left:21.4%;top:58%;width:3.6%;height:19%;border-radius:4px;opacity:0;mix-blend-mode:screen;
-  background:radial-gradient(closest-side,rgba(150,190,255,1),rgba(47,111,255,.65) 60%,transparent)}
-.m-core{position:absolute;left:31.5%;top:50%;width:14%;height:40%;opacity:0;mix-blend-mode:screen;
-  background:radial-gradient(closest-side,rgba(170,205,255,.95),rgba(47,111,255,.55) 55%,transparent)}
-.m-bits{position:absolute;left:50.5%;top:69%;width:0;height:0}
-.m-bits i{position:absolute;left:0;top:0;width:clamp(4px,.7vw,10px);aspect-ratio:1;background:#3d78ff;opacity:0;border-radius:1px}
-.m-bits i:nth-child(3n){background:#9cc0ff}
-.m-bits i:nth-child(4n){background:#fff;box-shadow:0 0 0 1px rgba(47,111,255,.35)}
-.frame .m-layer .m-out{transform-origin:50% 90%}
-.frame .m-layer .m-o1{left:53.529%;top:60.141%;width:8.792%;height:19.718%}
-.frame .m-layer .m-o2{left:63.397%;top:62.676%;width:9.091%;height:18.592%}
-.frame .m-layer .m-o3{left:74.163%;top:62.676%;width:9.689%;height:20.423%}
-.frame .m-layer .m-o4{left:85.347%;top:62.254%;width:10.347%;height:22.535%}
+/* ════════════════════════════════════════════════════════════════════
+   v3 — پالت جدید، هیروی عکس، و سیستم حرکت
+   ════════════════════════════════════════════════════════════════════ */
+:root{--e-out:cubic-bezier(.16,1,.3,1);--e-io:cubic-bezier(.77,0,.18,1)}
+::selection{background:var(--accent);color:#000}
+.card,.art,.inspector,.exp,.node-a,.list li,.prompt,.board-hub,.qa-list{background:var(--card)}
+.list li,.node-a,.card,.art,.inspector{border-color:var(--line)}
 
-.run .m-bulb{animation:m-bulb 8s infinite}
-.run .m-mouth{animation:m-flash 8s infinite}
-.run .m-core{animation:m-core 8s infinite}
-.run .m-bits i{animation:m-bit 8s infinite;animation-delay:var(--d,0s)}
-.run .m-out{animation:m-pop 8s infinite}
-.run .m-o2{animation-delay:.3s}
-.run .m-o3{animation-delay:.6s}
-.run .m-o4{animation-delay:.9s}
-.paused .m-layer *{animation-play-state:paused!important}
+/* ───── هیرو: عکس + امضایی که نوشته می‌شه ───── */
+.frame.photo-frame{aspect-ratio:2000/820;background:#b7a996;
+  box-shadow:0 40px 90px -36px rgba(0,0,0,.55),0 0 0 1px var(--line)}
+.photo-frame .p-par{position:absolute;inset:0;will-change:transform}
+.photo-frame .p-img{transform:scale(1.06);transform-origin:72% 42%}
+.frame .p-sig{inset:auto;left:10.15%;top:43.05%;width:49.05%;height:29.51%;object-fit:fill}
+.photo-frame .p-glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;opacity:.75;
+  background:radial-gradient(38% 60% at var(--mx,76%) var(--my,36%),rgba(255,190,120,.95),transparent 72%);
+  animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.35}}
+.photo-frame .badge{inset-block-start:16px;inset-block-end:auto;inset-inline-start:auto;inset-inline-end:16px;
+  background:rgba(204,200,185,.78);color:#000;box-shadow:0 6px 22px rgba(0,0,0,.18)}
+.photo-frame .badge i{background:var(--accent)}
+@media (max-width:760px){
+  .photo-frame .badge{inset-block-start:10px;inset-inline-end:10px;font-size:11px;padding:6px 11px}
+}
 
-@keyframes m-bulb{
-  0%,6%{transform:none;opacity:1;filter:none;animation-timing-function:cubic-bezier(.55,0,.35,1)}
-  30%{transform:translate(85.45%,-7.3%) scale(.45);opacity:1;filter:brightness(1.15)}
-  31.5%{transform:translate(85.45%,-7.3%) scale(.45);opacity:0}
-  33%,82%{transform:scale(.7);opacity:0;animation-timing-function:cubic-bezier(.16,1,.3,1)}
-  92%,100%{transform:none;opacity:1}
+/* ورود هیرو — فقط وقتی JS هست؛ بدون JS همه‌چیز از اول سر جاشه */
+.js .photo-frame{clip-path:inset(9% 7% 9% 7% round 28px);transition:clip-path 1.5s var(--e-io)}
+.intro-go .photo-frame{clip-path:inset(0 round 18px)}
+.js .photo-frame .p-img{transform:scale(1.3);transition:transform 2.8s var(--e-out)}
+.intro-go .photo-frame .p-img{transform:scale(1.06)}
+.js .p-sig{clip-path:inset(-25% 100% -25% 0);transition:clip-path 2.6s cubic-bezier(.55,.08,.25,1) 1s}
+.intro-go .p-sig{clip-path:inset(-25% 0 -25% 0)}
+.js .photo-frame .badge{opacity:0;transform:translateY(-12px);filter:blur(6px);
+  transition:opacity .8s var(--e-out) 1.7s,transform .8s var(--e-out) 1.7s,filter .8s var(--e-out) 1.7s}
+.intro-go .photo-frame .badge{opacity:1;transform:none;filter:none}
+.hero h1 .letters{display:inline-flex;overflow:clip;overflow-clip-margin:.06em}
+.hero h1 .l{display:inline-block}
+.js .hero h1 .l{transform:translateY(108%);transition:transform 1.1s var(--e-out);transition-delay:calc(var(--i,0) * 70ms + .5s)}
+.intro-go .hero h1 .l{transform:none}
+.js .hero .tag{opacity:0;letter-spacing:1.1em;transition:opacity 1.2s ease 1s,letter-spacing 1.8s var(--e-out) 1s}
+.intro-go .hero .tag{opacity:1;letter-spacing:.44em}
+.sel-box{transition-delay:1.5s}
+
+/* ───── نوار متحرک: نوار مشکی بین بخش‌ها ───── */
+.marquee{background:var(--ink);border-block:0}
+.marquee span,.marquee span.fa{color:color-mix(in srgb,var(--paper) 78%,var(--ink))}
+.marquee b{color:var(--accent)}
+
+/* ───── دکمه‌ها: پر شدن از پایین + کشش آهنربایی ───── */
+.go{position:relative;overflow:hidden;isolation:isolate;transition:transform .45s var(--e-out),box-shadow .3s,color .35s}
+.go::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);border-radius:inherit;
+  transform:translateY(102%);transition:transform .5s var(--e-out)}
+.go:hover::after,.go:focus-visible::after{transform:none}
+.go:hover,.go:focus-visible{color:var(--paper)}
+.go.ghost{color:var(--ink)}
+.go.ghost:hover{color:var(--paper)}
+.go .ar{transition:transform .45s var(--e-out)}
+.go:hover .ar{transform:translateX(-4px)}
+
+/* ───── ورود متن: کلمه‌به‌کلمه، از تاری به وضوح ───── */
+.js [data-reveal]{opacity:0;transform:translateY(26px);filter:blur(8px);
+  transition:opacity .9s var(--e-out),transform 1.1s var(--e-out),filter .9s var(--e-out);transition-delay:var(--d,0ms)}
+.js [data-reveal].in{opacity:1;transform:none;filter:none}
+.js .split[data-reveal],.js .split{opacity:1;transform:none;filter:none}
+.split .w{display:inline-block}
+.js .split .w{opacity:0;transform:translateY(.55em) rotate(1.5deg);filter:blur(6px);
+  transition:opacity .8s var(--e-out),transform 1s var(--e-out),filter .8s var(--e-out);
+  transition-delay:calc(var(--i,0) * 45ms + var(--d,0ms))}
+.js .split.in .w{opacity:1;transform:none;filter:none}
+
+/* ───── امضای پایانی: بلوک قرمز ───── */
+.finale{background:var(--accent);color:#000;margin:clamp(40px,8vh,90px) clamp(12px,3vw,40px) 0;border-radius:28px;overflow:hidden}
+.finale .f-sig,.finale .f-line{color:#000}
+@supports (animation-timeline:view()){
+  .f-mark{animation:drift linear both;animation-timeline:view();animation-range:entry 0% cover 60%}
+  @keyframes drift{from{transform:translateX(-14%);letter-spacing:.06em}to{transform:none;letter-spacing:-.05em}}
 }
-@keyframes m-flash{0%,27%{opacity:0}31%{opacity:1}42%,100%{opacity:0}}
-@keyframes m-core{0%,30%{opacity:0}36%{opacity:1}43%{opacity:.55}48%{opacity:.9}58%,100%{opacity:0}}
-@keyframes m-bit{
-  0%,40%{transform:translate(0,0) scale(.4);opacity:0}
-  42%{opacity:1}
-  60%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}
-  100%{opacity:0}
+
+/* ───── جابه‌جایی بین صفحه‌ها و عوض شدن تم ───── */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .35s cubic-bezier(.4,0,1,1) both}
+::view-transition-new(root){animation:vt-in .7s var(--e-out) both}
+@keyframes vt-out{to{opacity:0;transform:translateY(-14px);filter:blur(6px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(22px);filter:blur(8px)}}
+.dock{view-transition-name:dock}
+html.theming::view-transition-old(root),html.theming::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html.theming::view-transition-old(root){z-index:1}
+html.theming::view-transition-new(root){z-index:2}
+
+/* ═══════ آزمایشگاه — کارت هر آزمایش ═══════ */
+.lab-hello{font-size:clamp(17px,2vw,21px)!important;line-height:2!important;color:var(--ink)!important}
+.labx{display:grid;gap:22px;padding:clamp(18px,3vw,34px);border-radius:26px;background:var(--card);
+  border:1px solid var(--line);box-shadow:0 30px 60px -40px rgba(0,0,0,.45)}
+.labx-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;direction:ltr}
+.labx-no{font-family:Poppins,sans-serif;font-weight:600;font-size:clamp(46px,7vw,84px);line-height:.8;letter-spacing:-.05em;color:var(--accent)}
+.labx-head .status{direction:rtl}
+.labx .exp{border:0;padding:0;background:none}
+.labx-explain{display:grid;gap:12px}
+@media (min-width:900px){.labx-explain{grid-template-columns:1fr 1fr}}
+.labx-box{padding:20px 22px;border-radius:18px;background:color-mix(in srgb,var(--ink) 6%,var(--card))}
+.labx-box h3{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:400;margin-bottom:10px;color:var(--ink)}
+.labx-box h3::before{content:"";width:9px;height:9px;background:var(--accent);flex:none}
+.labx .labx-box p{font-size:clamp(15px,1.6vw,17px);line-height:2.05;color:var(--ink)}
+.labx-box.ex{background:var(--accent)}
+.labx-box.ex h3,.labx .labx-box.ex p{color:#000}
+.labx-box.ex h3::before{background:#000}
+.labx .labx-use{font-size:clamp(15px,1.6vw,17px);line-height:2;color:var(--ink);padding-top:16px;border-top:1px dashed var(--line)}
+.labx-use b{font-weight:400;color:var(--accent-text)}
+.n-no{font-family:Poppins,sans-serif;font-weight:600;font-size:12px;color:var(--dim);direction:ltr}
+.js .labx{opacity:0;transform:translateY(40px) scale(.98);transition:opacity .9s var(--e-out),transform 1.1s var(--e-out)}
+.js .labx.in{opacity:1;transform:none}
+@media (hover:hover){
+  .labx{transition:opacity .9s var(--e-out),transform 1.1s var(--e-out),box-shadow .4s}
+  .labx:hover{box-shadow:0 40px 80px -40px rgba(0,0,0,.55)}
 }
-@keyframes m-pop{
-  0%,44%{transform:none;filter:none}
-  47%{transform:translateY(-7%) scale(1.09);filter:brightness(1.12) saturate(1.15);animation-timing-function:cubic-bezier(.34,1.56,.64,1)}
-  53%,100%{transform:none;filter:none}
-}
+
+/* ───── حرکت کمتر: همه‌چیز سر جای نهایی ───── */
 @media (prefers-reduced-motion:reduce){
-  .run .m-layer *{animation:none!important}
+  .js .photo-frame{clip-path:none}
+  .js .photo-frame .p-img{transform:scale(1.06)}
+  .js .p-sig{clip-path:none}
+  .js .photo-frame .badge,.js .hero .tag,.js .split .w,.js .labx{opacity:1;transform:none;filter:none;letter-spacing:.44em}
+  .js .split .w,.js .labx{letter-spacing:normal}
+  .js .hero h1 .l{transform:none}
+  .js [data-reveal]{filter:none}
+  .photo-frame .p-glow{animation:none}
+  .go::after{transition:none}
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+  .f-mark{animation:none}
 }

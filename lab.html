@@ -10,11 +10,11 @@
 <meta property="og:title" content="OMID LAB — OMID">
 <meta property="og:description" content="اینجا چیزهایی رو امتحان می‌کنم که هنوز اسم مشخصی ندارن.">
 <meta property="og:image" content="assets/og.jpg">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#CCC8B9">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=20261006b">
-<script src="theme.js?v=20261006b"></script>
+<link rel="stylesheet" href="style.css?v=20261008b">
+<script src="theme.js?v=20261008b"></script>
 </head>
 <body class="page c3">
 
@@ -27,7 +27,7 @@
     <span class="no" aria-hidden="true">03</span>
     <div>
       <h1>آزمایشگاه.</h1>
-      <p class="sub">اینجا چیزهایی رو امتحان می‌کنم که هنوز اسم مشخصی ندارن. همه‌ی آزمایش‌ها همین‌جا کار می‌کنن؛ امتحانشون کن.</p>
+      <p class="sub">اینجا چیزهایی رو امتحان می‌کنم که هنوز اسم مشخصی ندارن. همه‌ی آزمایش‌ها همین‌جا، تو همین صفحه کار می‌کنن؛ لازم نیست چیزی نصب کنی.</p>
     </div>
   </div>
 </header>
@@ -45,8 +45,8 @@
   <div>
 <section class="sec" id="s0" data-name="Map">
   <p class="lbl">Map</p>
-  <h2>نقشه‌ی آزمایش‌ها</h2>
-  <p>روی هرکدوم بزنی، می‌ری سراغش. روی کامپیوتر می‌تونی کارت‌ها رو جابه‌جا هم بکنی.</p>
+  <h2>پنج تا آزمایش کوچیک</h2>
+  <p><span class="lab-hello">هرکدوم یه تیکه از AI رو ساده نشون می‌ده. اول باهاش بازی کن، بعد توضیح ساده‌ش رو بخون. روی هر کارت بزنی، می‌ری سراغش.</span></p>
   
   <div class="viz board" data-board>
     <svg class="board-wires" aria-hidden="true"></svg>
@@ -65,7 +65,9 @@
   <p class="lbl">AI × Music</p>
   <h2>آهنگی که هر بار عوض می‌شه</h2>
   
-  <ul class="list"><li><span class="n">01</span><h3>چی رو تست کردم</h3><p>یه لوپ کوتاه که کامل با کد ساخته می‌شه؛ بدون نمونه‌ی صوتی و بدون فایل آماده. هر بار نت‌ها، ریتم و سرعت از نو چیده می‌شن.</p></li><li><span class="n">02</span><h3>چرا</h3><p>می‌خواستم ببینم یه موزیک کوچیک که از صفر با چندتا قانون ساخته شده، چقدر می‌تونه شخصیت داشته باشه.</p></li><li><span class="n">03</span><h3>نتیجه</h3><p>در حال تست. بعضی‌هاش خوب درمیاد، بعضی‌هاش نه؛ اینکه کدومش ارزش نگه داشتن داره رو هنوز گوش آدم تشخیص می‌ده.</p></li></ul>
+  
+  <div class="viz labx">
+  <div class="labx-head"><span class="labx-no" aria-hidden="true">01</span><span class="status testing">در حال تست</span></div>
   <div class="viz exp" data-exp="music">
     <canvas class="exp-canvas" width="640" height="160" aria-hidden="true"></canvas>
     <div class="exp-row">
@@ -75,13 +77,21 @@
     </div>
     <p class="exp-fine">صدا فقط با زدن «پخش» شروع می‌شه.</p>
   </div>
+  <div class="labx-explain">
+    <div class="labx-box"><h3>یعنی چی؟</h3><p>به‌جای اینکه یه آهنگ آماده دانلود کنم، چندتا قانون ساده به کامپیوتر دادم؛ مثلاً «فقط از این پنج تا نت استفاده کن» یا «سر هر ضرب یه کیک بزن». هر بار «یه آهنگ تازه» رو بزنی، با همون قانون‌ها یه آهنگ جدید می‌سازه.</p></div>
+    <div class="labx-box ex"><h3>یه مثال ساده</h3><p>مثل پلو پختن با یه دستور ثابت: برنج، آب، نمک. هر بار یه‌کم فرق می‌کنه، ولی همیشه پلو درمیاد. اینجا هم قانون‌ها ثابته، آهنگ هر بار فرق می‌کنه.</p></div>
+  </div>
+  <p class="labx-use"><b>به چه دردت می‌خوره؟</b> برای ریلز یا ویدیوت موزیکی داری که مال خودته؛ نه کپی‌رایت داره، نه شبیه موزیک ترندیه که همه گذاشتن.</p>
+</div>
 </section>
 
 <section class="sec" id="s2" data-name="AI × Image">
   <p class="lbl">AI × Image</p>
   <h2>از نویز تا تصویر</h2>
   
-  <ul class="list"><li><span class="n">01</span><h3>چی رو تست کردم</h3><p>یه شبیه‌سازی ساده از کاری که مدل‌های تصویر می‌کنن: از نویز شروع می‌کنه و قدم‌به‌قدم تمیزش می‌کنه تا یه چیز معنی‌دار دربیاد.</p></li><li><span class="n">02</span><h3>چرا</h3><p>تا وقتی نبینی چطور کار می‌کنه، به نظر جادو میاد. جادو نیست؛ حدس زدنِ قدم‌به‌قدمه.</p></li><li><span class="n">03</span><h3>نتیجه</h3><p>جواب داد. یه کلمه بنویس و ببین چطور از نویز درمیاد.</p></li></ul>
+  
+  <div class="viz labx">
+  <div class="labx-head"><span class="labx-no" aria-hidden="true">02</span><span class="status done">جواب داد</span></div>
   <div class="viz exp" data-exp="noise">
     <canvas class="exp-canvas" width="640" height="300" aria-hidden="true"></canvas>
     <form class="exp-row" data-noise-form>
@@ -90,13 +100,21 @@
     </form>
     <p class="exp-fine" aria-live="polite" data-noise-status></p>
   </div>
+  <div class="labx-explain">
+    <div class="labx-box"><h3>یعنی چی؟</h3><p>هوش مصنوعی‌های عکس‌ساز عکس رو یهو نمی‌کشن. از یه صفحه‌ی پر از نقطه‌های بی‌معنی شروع می‌کنن و توی چند ده قدم، نقطه‌ها رو آروم‌آروم جابه‌جا می‌کنن تا بشه همون چیزی که خواستی. اینجا همین کار رو با یه کلمه می‌بینی.</p></div>
+    <div class="labx-box ex"><h3>یه مثال ساده</h3><p>مثل وقتی که یه نفر پشت شیشه‌ی بخارگرفته‌ی حموم وایساده: اول فقط یه لکه‌ست، بخار که کم می‌شه، کم‌کم صورتش واضح می‌شه.</p></div>
+  </div>
+  <p class="labx-use"><b>به چه دردت می‌خوره؟</b> وقتی بفهمی AI چطوری عکس می‌سازه، می‌فهمی چرا پرامپت دقیق‌تر عکس بهتری می‌ده؛ هر کلمه‌ی پرامپت به اون قدم‌ها جهت می‌ده.</p>
+</div>
 </section>
 
 <section class="sec" id="s3" data-name="Ideas">
   <p class="lbl">Ideas</p>
   <h2>ماشین ترکیب</h2>
   
-  <ul class="list"><li><span class="n">01</span><h3>چی رو تست کردم</h3><p>یه کسب‌وکار و یه زاویه‌ی غیرمنتظره رو تصادفی کنار هم می‌ذاره.</p></li><li><span class="n">02</span><h3>چرا</h3><p>ماشین خیلی خوب ترکیب می‌کنه. ولی اینکه کدوم ترکیب ارزش ساختن داره رو هنوز آدم تشخیص می‌ده.</p></li><li><span class="n">03</span><h3>نتیجه</h3><p>بیشتر ترکیب‌ها به درد نمی‌خورن. هر چند بار یه بار، یکی‌شون یه چیزی رو تو ذهنت روشن می‌کنه؛ همونو نگه دار.</p></li></ul>
+  
+  <div class="viz labx">
+  <div class="labx-head"><span class="labx-no" aria-hidden="true">03</span><span class="status always">همیشه روشن</span></div>
   <div class="viz exp" data-exp="combine">
     <p class="combo" aria-live="polite"><span data-combo="a">نونوایی</span><span class="combo-x en">×</span><span class="combo-b" data-combo="b">بدون هیچ کلمه‌ای</span></p>
     <div class="exp-row">
@@ -105,30 +123,52 @@
     </div>
     <ol class="kept" data-combo-kept aria-label="ترکیب‌های نگه‌داشته"></ol>
   </div>
+  <div class="labx-explain">
+    <div class="labx-box"><h3>یعنی چی؟</h3><p>ماشین یه کسب‌وکار و یه زاویه‌ی عجیب رو تصادفی کنار هم می‌ذاره. بیشترشون بی‌معنی‌ان؛ کار تو اینه که از بینشون اونی رو پیدا کنی که یه جرقه می‌زنه.</p></div>
+    <div class="labx-box ex"><h3>یه مثال ساده</h3><p>«نونوایی × بدون هیچ کلمه‌ای» می‌شه یه ویدیوی ده‌ثانیه‌ای از صدای ترک خوردن پوسته‌ی نون داغ، بدون هیچ متنی. همین کافیه که آدم گرسنه‌ش بشه.</p></div>
+  </div>
+  <p class="labx-use"><b>به چه دردت می‌خوره؟</b> وقتی ایده نداری، ذهنت رو از مسیر تکراری بیرون می‌کشه. ماشین ترکیب می‌کنه، تو انتخاب می‌کنی.</p>
+</div>
 </section>
 
 <section class="sec" id="s4" data-name="Creative Tests">
   <p class="lbl">Creative Tests</p>
   <h2>ردیاب کلیشه</h2>
   
-  <ul class="list"><li><span class="n">01</span><h3>چی رو تست کردم</h3><p>یه متن تبلیغ بنویس؛ کلمه‌ها و جمله‌های کلیشه‌ای‌ش رو پیدا می‌کنه و خط می‌زنه.</p></li><li><span class="n">02</span><h3>چرا</h3><p>متن‌هایی که با AI نوشته می‌شن، اکثراً با همین کلمه‌ها پر می‌شن. اولین قدمِ متفاوت شدن، دیدن‌شونه.</p></li><li><span class="n">03</span><h3>نتیجه</h3><p>در حال تست. فقط کلمه‌ها رو می‌گیره، نه ایده‌ی تکراری رو؛ اون یکی هنوز کار خودته.</p></li></ul>
+  
+  <div class="viz labx">
+  <div class="labx-head"><span class="labx-no" aria-hidden="true">04</span><span class="status testing">در حال تست</span></div>
   <div class="viz exp" data-exp="cliche">
     <label class="field"><span class="field-lbl">متن تبلیغت رو اینجا بنویس</span>
       <textarea class="field-in area" rows="4" maxlength="600" spellcheck="false" data-cliche-input>در دنیای امروز، ما با کیفیت برتر و طراحی منحصربه‌فرد، تجربه‌ای متفاوت و شگفت‌انگیز برای شما می‌سازیم. همین حالا سفارش بده!</textarea></label>
     <p class="cliche-out" data-cliche-out aria-live="polite"></p>
     <p class="exp-meta" data-cliche-count></p>
   </div>
+  <div class="labx-explain">
+    <div class="labx-box"><h3>یعنی چی؟</h3><p>یه متن تبلیغ بنویس؛ کلمه‌هایی که همه‌جا تکرار شدن، مثل «بی‌نظیر» و «کیفیت برتر»، خط می‌خورن. چیزی که می‌مونه، حرف واقعی خودته.</p></div>
+    <div class="labx-box ex"><h3>یه مثال ساده</h3><p>«بهترین کفش با کیفیت بی‌نظیر» دو تا کلیشه داره و هیچی نمی‌گه. به‌جاش بنویس: «سه ساله این کفش پامه، هنوز نبردمش کفاشی.» حالا آدم باورت می‌کنه.</p></div>
+  </div>
+  <p class="labx-use"><b>به چه دردت می‌خوره؟</b> متن‌هایی که با AI نوشته می‌شن پر از همین کلمه‌هان. وقتی پاکشون کنی، متنت شبیه آدم می‌شه، نه شبیه ماشین.</p>
+</div>
 </section>
 
 <section class="sec" id="s5" data-name="AI × Web">
   <p class="lbl">AI × Web</p>
   <h2>اسکلت همین سایت</h2>
   
-  <ul class="list"><li><span class="n">01</span><h3>چی رو تست کردم</h3><p>یه کلید که شبکه‌ی دوازده‌ستونی و اسم بخش‌های همین صفحه رو روشن می‌کنه.</p></li><li><span class="n">02</span><h3>چرا</h3><p>یه سایت مرتب از شانس درنمیاد. می‌خواستم اسکلتش رو همون‌جوری نشون بدم که موقع ساختن می‌دیدمش.</p></li><li><span class="n">03</span><h3>نتیجه</h3><p>جواب داد. روشنش کن و تا پایین صفحه اسکرول کن.</p></li></ul>
+  
+  <div class="viz labx">
+  <div class="labx-head"><span class="labx-no" aria-hidden="true">05</span><span class="status done">جواب داد</span></div>
   <div class="viz exp" data-exp="blueprint">
     <div class="switch-row"><span id="bp-lbl">حالت نقشه</span><button class="switch" type="button" role="switch" aria-checked="false" aria-labelledby="bp-lbl" data-blueprint><i aria-hidden="true"></i></button></div>
     <p class="exp-fine">روشنش کن و تا پایین صفحه اسکرول کن. هر بخش اسم و جای خودش رو روی شبکه نشون می‌ده.</p>
   </div>
+  <div class="labx-explain">
+    <div class="labx-box"><h3>یعنی چی؟</h3><p>هر سایت مرتب یه اسکلت نامرئی داره: دوازده تا ستون که همه‌چیز روی اون‌ها می‌شینه. این کلید، اون اسکلت رو روی همین صفحه نشونت می‌ده.</p></div>
+    <div class="labx-box ex"><h3>یه مثال ساده</h3><p>مثل خط‌های کم‌رنگ دفتر خوش‌نویسی: آخر کار دیده نمی‌شن، ولی بدون اون‌ها نوشته کج و ناصاف می‌شد.</p></div>
+  </div>
+  <p class="labx-use"><b>به چه دردت می‌خوره؟</b> وقتی خودت با AI سایت می‌سازی، می‌فهمی چرا بعضی صفحه‌ها مرتب به نظر میان و بعضی‌ها شلوغ؛ و می‌تونی ازش بخوای همه‌چی رو روی شبکه بچینه.</p>
+</div>
 </section>
 
 <section class="sec" id="faq" data-name="FAQ">
@@ -167,7 +207,7 @@
   <button id="theme" type="button" data-lbl="روشن / تاریک" aria-label="تغییر روشنایی"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/></svg></button>
 </nav>
 <div class="blueprint" aria-hidden="true"><div class="bp-cols"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-<script src="app.js?v=20261006b" defer></script>
-<script src="lab.js?v=20261006b" defer></script>
+<script src="app.js?v=20261008b" defer></script>
+<script src="lab.js?v=20261008b" defer></script>
 </body>
 </html>
