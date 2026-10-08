@@ -64,7 +64,7 @@ const FOOT = `<footer class="foot">
   <div class="foot-in">
     <p class="foot-brand en">OMID <span>AI × HUMAN CREATIVITY</span></p>
     <p class="foot-rule">AI ابزار منه. خلاقیت مزیت منه.</p>
-    <p class="foot-links en"><a href="https://instagram.com/itsomidai.2" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://t.me/itsomid_ai" target="_blank" rel="noopener noreferrer">Telegram</a></p>
+    <p class="foot-links en"><a href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://t.me/itsomid_ai" target="_blank" rel="noopener noreferrer">Telegram</a></p>
     <p class="foot-copy en">© 2026 OMID</p>
   </div>
 </footer>`;
@@ -174,7 +174,7 @@ const VIS = {
   </div>`,
 
   socials: `<ul class="viz socials">
-    <li><a class="social" href="https://instagram.com/itsomidai.2" target="_blank" rel="noopener noreferrer"><span class="s-name en">INSTAGRAM</span><span class="s-handle en">@itsomidai.2</span><svg class="s-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M8 7h9v9"/></svg></a></li>
+    <li><a class="social" href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer"><span class="s-name en">INSTAGRAM</span><span class="s-handle en">@itsomid1.ai</span><svg class="s-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M8 7h9v9"/></svg></a></li>
     <li><a class="social" href="https://t.me/itsomid_ai" target="_blank" rel="noopener noreferrer"><span class="s-name en">TELEGRAM</span><span class="s-handle en">@itsomid_ai</span><svg class="s-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M8 7h9v9"/></svg></a></li>
   </ul>`,
 
@@ -444,7 +444,7 @@ const PAGES = [
       ["ایده‌م هنوز کامل نیست. پیام بدم؟", "آره. بیشتر کارهای خوب از یه ایده‌ی نصفه شروع شدن."],
     ],
     ctaH: "منتظرم",
-    cta: '<a class="go" href="https://instagram.com/itsomidai.2" target="_blank" rel="noopener noreferrer"><span>پیام تو اینستاگرام</span><span class="ar">↗</span></a>',
+    cta: '<a class="go" href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer"><span>پیام تو اینستاگرام</span><span class="ar">↗</span></a>',
   },
 ];
 
