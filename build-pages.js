@@ -6,15 +6,27 @@ const fs = require("fs");
 /* ───────── سربرگ مشترک ───────── */
 const CSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests";
 
-const HEAD = (title, desc) => `<meta charset="utf-8">
+const HEAD = (title, desc, file) => `<meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="${CSP}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${title}</title>
 <meta name="description" content="${desc}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OMID">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:url" content="https://omidkhavari1708-pixel.github.io/itsomid/${file}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
-<meta property="og:image" content="assets/og.jpg">
+<meta property="og:image" content="https://omidkhavari1708-pixel.github.io/itsomid/assets/og-omid-2026.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="امید، با امضای دست‌نویس اسمش">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="https://omidkhavari1708-pixel.github.io/itsomid/assets/og-omid-2026.jpg">
+<link rel="canonical" href="https://omidkhavari1708-pixel.github.io/itsomid/${file}">
 <meta name="theme-color" content="#CCC8B9">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
@@ -231,7 +243,7 @@ const LABX = ({ no, status, widget, what, example, use }) => `<div class="viz la
 const page = (p) => `<!doctype html>
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
-${HEAD(`${p.title} — OMID`, p.desc)}
+${HEAD(`${p.title} — OMID`, p.desc, p.file)}
 </head>
 <body class="page ${p.cls}">
 
