@@ -6,6 +6,13 @@ const fs = require("fs");
 /* ───────── سربرگ مشترک ───────── */
 const CSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests";
 
+/* نسخه‌ی فایل‌ها: هر بار CSS یا JS عوض شد، این عدد رو عوض کن تا گوشی‌ها نسخه‌ی تازه رو بگیرن. */
+const V = "20261025";
+const SITE = "https://omidkhavari1708-pixel.github.io/itsomid/";
+const DM = "https://ig.me/m/itsomid1.ai";
+const TG = "https://t.me/itsomidai";
+const md = (file) => (file === "" || file === "index.html" ? "index.md" : file.replace(/.html$/, ".md"));
+
 const HEAD = (title, desc, file) => `<meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="${CSP}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -27,11 +34,12 @@ const HEAD = (title, desc, file) => `<meta charset="utf-8">
 <meta name="twitter:description" content="${desc}">
 <meta name="twitter:image" content="https://omidkhavari1708-pixel.github.io/itsomid/assets/og-omid-2026.jpg">
 <link rel="canonical" href="https://omidkhavari1708-pixel.github.io/itsomid/${file}">
+<link rel="alternate" type="text/markdown" href="${md(file)}" title="نسخه‌ی متنی برای AI">
 <meta name="theme-color" content="#CCC8B9">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/nimkat.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=20261008b">
-<script src="theme.js?v=20261008b"></script>`;
+<link rel="stylesheet" href="style.css?v=${V}">
+<script src="theme.js?v=${V}"></script>`;
 
 const ICONS = {
   home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
@@ -40,13 +48,18 @@ const ICONS = {
   lab: '<path d="M9 3h6"/><path d="M10 3v6l-5.5 9.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.4 15h9.2"/>',
   about: '<circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c.6-3.7 3.3-5.6 6.5-5.6s5.9 1.9 6.5 5.6"/>',
   contact: '<path d="M4 5h16v14H4z"/><path d="m4 6 8 6 8-6"/>',
+  whatif: '<path d="M9.2 9a2.9 2.9 0 1 1 4.3 2.5c-.9.5-1.5 1.2-1.5 2.2v.6"/><path d="M12 17.6v.4"/><circle cx="12" cy="12" r="9"/>',
+  resume: '<rect x="6" y="2.5" width="12" height="19" rx="2.4"/><circle cx="12" cy="8.6" r="2.2"/><path d="M9 13.4h6M9.8 16.4h4.4"/>',
+  tools: '<path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>',
+  dm: '<path d="M12 3.5c-4.9 0-8.5 3.4-8.5 7.9 0 2.4 1 4.4 2.8 5.9l-.5 3.2 3.1-1.6c1 .3 2 .4 3.1.4 4.9 0 8.5-3.4 8.5-7.9S16.9 3.5 12 3.5Z"/><path d="m7.6 13.3 3-3.1 2.2 2 3.6-2.9"/>',
 };
 
 const DOCK = (cur) => {
   const it = [
     ["index.html", "خانه", ICONS.home],
-    ["vs.html", "معمولی و خلاق", ICONS.vs],
-    ["method.html", "فکر، ساخت، اجرا", ICONS.method],
+    ["whatif.html", "ببین چی می‌شه اگه…", ICONS.whatif],
+    ["resume.html", "سایت رزومه", ICONS.resume],
+    ["tools.html", "ابزارها", ICONS.tools],
     ["lab.html", "آزمایشگاه", ICONS.lab],
     ["about.html", "امید کیه", ICONS.about],
   ].map(([h, l, p]) =>
@@ -55,7 +68,7 @@ const DOCK = (cur) => {
   return `<nav class="dock" aria-label="ناوبری">
 ${it}
   <span class="sep"></span>
-  <a href="contact.html"${cur === "contact.html" ? ' aria-current="page"' : ""} data-lbl="تماس" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS.contact}</svg></a>
+  <a class="dock-dm" href="${DM}" target="_blank" rel="noopener noreferrer" data-lbl="دایرکت: بنویس «رزومه»" aria-label="پیام تو اینستاگرام؛ بنویس رزومه"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS.dm}</svg></a>
   <button id="theme" type="button" data-lbl="روشن / تاریک" aria-label="تغییر روشنایی"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/></svg></button>
 </nav>`;
 };
@@ -64,10 +77,34 @@ const FOOT = `<footer class="foot">
   <div class="foot-in">
     <p class="foot-brand en">OMID <span>AI × HUMAN CREATIVITY</span></p>
     <p class="foot-rule">AI ابزار منه. خلاقیت مزیت منه.</p>
-    <p class="foot-links en"><a href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://t.me/itsomid_ai" target="_blank" rel="noopener noreferrer">Telegram</a></p>
+    <p class="foot-links en"><a href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer">Instagram</a><a href="${TG}" target="_blank" rel="noopener noreferrer">Telegram</a></p>
     <p class="foot-copy en">© 2026 OMID</p>
   </div>
+  <nav class="foot-map" aria-label="همه‌ی صفحه‌ها"><a href="tools.html">ابزارها</a><a href="resume.html">سایت رزومه</a><a href="7-days.html">۷ روز ساخت</a><a href="whatif.html">ببین چی می‌شه اگه…</a><a href="log.html">دفترچه‌ی ساخت</a><a href="method.html">فکر، ساخت، اجرا</a><a href="why-ai.html">چرا خلاقیت</a><a href="contact.html">تماس</a></nav>
 </footer>`;
+
+/* ───────── اعلان «تازه‌ها» ─────────
+   هر چیز تازه‌ای که به سایت اضافه می‌شه، فقط با تأیید امید اینجا میاد.
+   بالاترین ورودی همونیه که به بازدیدکننده نشون داده می‌شه؛ هر کی یه بار ببندتش، تا ورودی بعدی دیگه نمی‌بینه. */
+const NEWS = [
+  { id: "1405-08-03", items: [
+    ["tools.html", "ابزارها: دو PDF رایگان و ۷ پرامپت"],
+    ["resume.html", "سایت خودت رو تو ۱۰ ثانیه ببین"],
+    ["7-days.html", "سایتت رو تو ۷ روز بساز"],
+  ] },
+];
+const TOAST = () => {
+  const n = NEWS[0];
+  return `<aside class="toast" data-news="${n.id}" hidden aria-label="تازه‌های سایت">
+  <p class="toast-k"><i aria-hidden="true"></i>تازه اضافه شد</p>
+  <ul>${n.items.map(([h, t]) => `<li><a href="${h}">${t}<span class="ar" aria-hidden="true">←</span></a></li>`).join("")}</ul>
+  <button type="button" class="toast-x" data-news-x aria-label="بستن">×</button>
+</aside>`;
+};
+
+const DMBTN = (label = "تو دایرکت بنویس «رزومه»") =>
+  `<a class="go" href="${DM}" target="_blank" rel="noopener noreferrer"><span>${label}</span><span class="ar">↗</span></a>`;
+const CTA_DEFAULT = `<div class="cta-row">${DMBTN()}<a class="go ghost" href="resume.html"><span>اول پیش‌نمایشش رو ببین</span><span class="ar">←</span></a></div>`;
 
 /* ───────── تیکه‌های تصویری ───────── */
 const ARROW = '<svg class="ink ink-arrow" viewBox="0 0 120 40" aria-hidden="true"><path pathLength="1" d="M112 22C84 30 50 30 14 18m12-12L12 18l14 10"/></svg>';
@@ -175,7 +212,7 @@ const VIS = {
 
   socials: `<ul class="viz socials">
     <li><a class="social" href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer"><span class="s-name en">INSTAGRAM</span><span class="s-handle en">@itsomid1.ai</span><svg class="s-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M8 7h9v9"/></svg></a></li>
-    <li><a class="social" href="https://t.me/itsomid_ai" target="_blank" rel="noopener noreferrer"><span class="s-name en">TELEGRAM</span><span class="s-handle en">@itsomid_ai</span><svg class="s-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M8 7h9v9"/></svg></a></li>
+    <li><a class="social" href="https://t.me/itsomidai" target="_blank" rel="noopener noreferrer"><span class="s-name en">TELEGRAM</span><span class="s-handle en">@itsomidai</span><svg class="s-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M8 7h9v9"/></svg></a></li>
   </ul>`,
 
   board: `<div class="viz board" data-board>
@@ -187,6 +224,7 @@ const VIS = {
       <li class="node" data-x="14" data-y="78"><a class="node-a" href="#s3"><span class="n-cat en">IDEAS</span><span class="n-title">ماشین ترکیب</span><span class="n-viz combo" aria-hidden="true"><i>نونوایی</i><b>×</b><i>بدون کلمه</i></span><span class="status always">همیشه روشن</span></a></li>
       <li class="node" data-x="52" data-y="84"><a class="node-a" href="#s4"><span class="n-cat en">CREATIVE TESTS</span><span class="n-title">ردیاب کلیشه</span><span class="n-viz strike" aria-hidden="true"><s>بی‌نظیر</s> <s>شگفت‌انگیز</s></span><span class="status testing">در حال تست</span></a></li>
       <li class="node" data-x="85" data-y="74"><a class="node-a" href="#s5"><span class="n-cat en">AI × WEB</span><span class="n-title">اسکلت همین سایت</span><span class="n-viz cols" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="status done">جواب داد</span></a></li>
+      <li class="node" data-x="50" data-y="13"><a class="node-a" href="#s6"><span class="n-cat en">WHAT IF</span><span class="n-title">ببین چی می‌شه اگه…</span><span class="n-viz qmark" aria-hidden="true">اگه…؟</span><span class="status always">همیشه روشن</span></a></li>
     </ul>
   </div>`,
 
@@ -239,6 +277,241 @@ const LABX = ({ no, status, widget, what, example, use }) => `<div class="viz la
   <p class="labx-use"><b>به چه دردت می‌خوره؟</b> ${use}</p>
 </div>`;
 
+/* ───────── تیکه‌های صفحه‌های تازه (۱۴۰۵/۰۸/۰۳) ─────────
+   همه‌ی ابزارها تو خود مرورگر کار می‌کنن (tools.js)؛ هیچی جایی فرستاده نمی‌شه. */
+const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const fa = (n) => String(n).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+/* «ببین چی می‌شه اگه…»: چهار قدم امضای برند */
+const LOOP = `<ol class="viz loop">
+  <li><span class="loop-n en">01</span><b>«ببین چی می‌شه اگه…»</b><span>یه سؤال کنجکاو، قبل از هر ابزاری.</span></li>
+  <li><span class="loop-n en">02</span><b>ساختن</b><span>واقعاً می‌سازمش؛ نه حرف، نه تئوری.</span></li>
+  <li><span class="loop-n en">03</span><b>WOW</b><span>اول نتیجه رو می‌بینی، بعد توضیحش رو.</span></li>
+  <li><span class="loop-n en">04</span><b>«حالا تو چی می‌سازی؟»</b><span>نوبت توئه. ابزار رو داری؛ ایده با خودته.</span></li>
+</ol>`;
+const EP = ({ built, wow, href, link, ext }) => `<div class="viz ep">
+  <div class="ep-step"><span class="ep-k">ساختم</span><p>${built}</p></div>
+  <div class="ep-step wow"><span class="ep-k en">WOW</span><p>${wow}</p></div>
+  <div class="ep-end"><p>حالا تو چی می‌سازی؟</p><a class="go sm ghost" href="${href}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ""}><span>${link}</span><span class="ar">${ext ? "↗" : "←"}</span></a></div>
+</div>`;
+
+/* ایده‌ساز «ببین چی می‌شه اگه…» — بانک ایده‌ها تو tools.js */
+const WHATIF_GEN = `<div class="viz wi" data-whatif>
+  <p class="wi-k">ببین چی می‌شه اگه…</p>
+  <p class="wi-t" data-wi-t aria-live="polite">سایتت رو مثل یه نامه بنویسی، نه مثل یه آگهی؟</p>
+  <p class="wi-end">حالا تو چی می‌سازی؟</p>
+  <div class="exp-row"><button class="go sm" type="button" data-wi-next><span>یه «اگه»ی دیگه</span></button><span class="wi-n en" data-wi-n></span></div>
+</div>`;
+
+/* پیش‌نمایش ده‌ثانیه‌ای سایت رزومه */
+const PV_FIELD = (k, label, ph, max) =>
+  `<label class="pv-f"><span>${label}</span><input type="text" data-pv-in="${k}" maxlength="${max}" placeholder="${ph}" autocomplete="off" spellcheck="false"></label>`;
+const PREVIEW = `<div class="viz pv" data-pv>
+  <div class="pv-form">
+    ${PV_FIELD("name", "اسمت", "مثلاً: دکتر سارا رضایی", 32)}
+    ${PV_FIELD("job", "کارت", "مثلاً: دندان‌پزشک", 40)}
+    ${PV_FIELD("line", "یه جمله درباره‌ت", "مثلاً: لبخند طبیعی، بدون عجله.", 80)}
+    ${PV_FIELD("city", "شهرت", "مثلاً: تهران", 20)}
+    <div class="pv-row"><span class="pv-k">حال‌وهوا</span><div class="pv-chips" role="radiogroup" aria-label="حال‌وهوا">
+      <button type="button" class="chip" role="radio" aria-checked="true" data-pv-style="creme">کرمی</button>
+      <button type="button" class="chip" role="radio" aria-checked="false" data-pv-style="night">شب</button>
+      <button type="button" class="chip" role="radio" aria-checked="false" data-pv-style="scarlet">قرمز</button>
+    </div></div>
+    <div class="pv-row"><span class="pv-k">یه نمونه بزن</span><div class="pv-chips">
+      <button type="button" class="chip" data-pv-preset="0">دکتر</button>
+      <button type="button" class="chip" data-pv-preset="1">وکیل</button>
+      <button type="button" class="chip" data-pv-preset="2">مهندس</button>
+      <button type="button" class="chip" data-pv-preset="3">عکاس</button>
+    </div></div>
+  </div>
+  <figure class="pv-phone">
+    <div class="pv-screen" data-pv-screen data-style="creme">
+      <p class="pv-bar"><i aria-hidden="true"></i><span class="en" data-pv-url>yourname.github.io</span></p>
+      <div class="pv-site">
+        <span class="pv-mono" data-pv-mono aria-hidden="true">؟</span>
+        <p class="pv-name" data-pv-out="name">اسم تو</p>
+        <p class="pv-job" data-pv-out="job">کار تو</p>
+        <p class="pv-line" data-pv-out="line">یه جمله که بگه چرا تو.</p>
+        <p class="pv-city" data-pv-out="city"></p>
+        <p class="pv-btns" aria-hidden="true"><span>نوبت بگیر</span><span>نمونه‌کارها</span></p>
+        <p class="pv-cards" aria-hidden="true"><i></i><i></i><i></i></p>
+      </div>
+    </div>
+    <figcaption>هیچی از اینجا جایی فرستاده نمی‌شه؛ فقط تو مرورگر خودته.</figcaption>
+  </figure>
+</div>`;
+
+/* کوییز «سایت لازم داری؟» — جواب صادقانه، حتی اگه «نه» باشه */
+const QUIZ_Q = [
+  "کسی قبل از همکاری یا خرید، ازت «نمونه‌کار» یا «رزومه» می‌خواد؟",
+  "آدم‌ها بیرون از اینستاگرام هم دنبالت می‌گردن؟ (گوگل، معرفی، لینکدین)",
+  "کارها و خدماتت تو ۱۵۰ کاراکترِ بایو جا نمی‌شن؟",
+  "اگه فردا پیجت بسته بشه، مشتری‌هات دیگه پیدات نمی‌کنن؟",
+];
+const QUIZ = `<div class="viz quiz" data-quiz>
+  <ol class="qz-list">${QUIZ_Q.map((q, i) => `
+    <li class="qz"><span class="qz-n en">0${i + 1}</span><p class="qz-q">${q}</p><p class="qz-a">
+      <button type="button" class="chip" data-qz="${i}" data-v="1" aria-pressed="false">آره</button>
+      <button type="button" class="chip" data-qz="${i}" data-v="0" aria-pressed="false">نه</button></p></li>`).join("")}
+  </ol>
+  <div class="qz-res" data-qz-res hidden aria-live="polite">
+    <p class="qz-score" data-qz-score></p>
+    <h3 data-qz-h></h3>
+    <p data-qz-p></p>
+    <p class="cta-row">
+      <a class="go sm" data-qz-dm hidden href="${DM}" target="_blank" rel="noopener noreferrer"><span>تو دایرکت بنویس «رزومه»</span><span class="ar">↗</span></a>
+      <a class="go sm ghost" data-qz-self hidden href="7-days.html"><span>خودت بسازش: ۷ روز</span><span class="ar">←</span></a>
+    </p>
+  </div>
+</div>`;
+
+/* ابزارها: PDFها (دانلود مستقیم) و پرامپت‌ها (کپی) */
+const PDFS = [
+  { file: "files/omid-amniat-site.pdf", title: "امنیت سایت · قدم ۳", pages: 11, size: "۴۸۰KB", tag: "SECURITY",
+    what: "دو پرامپت آماده، شش اسکیل و ابزار امنیتی، و چک‌لیست ۱۵ دقیقه‌ای برای قفل کردن سایتی که با AI ساختی." },
+  { file: "files/omid-motion-claude.pdf", title: "موشن‌گرافیک با Claude", pages: 23, size: "۱MB", tag: "MOTION",
+    what: "همون سیستمی که موشن‌های ریلزهام باهاش ساخته می‌شن؛ از متن و ثانیه‌بندی تا رندر، صدا و ترفندهای کیفیت." },
+];
+const PDFCARDS = `<ul class="viz pdfs">${PDFS.map((p) => `
+  <li class="pdf"><span class="pdf-tag en">${p.tag}</span><h3>${p.title}</h3><p>${p.what}</p>
+    <p class="pdf-meta">${fa(p.pages)} صفحه · ${p.size} · رایگان</p>
+    <a class="go sm" href="${p.file}" download><span>دانلود PDF</span><span class="ar">↓</span></a></li>`).join("")}
+</ul>`;
+
+const PROMPTS = [
+  { k: "scene", lbl: "Prompt 01", nav: "صحنه، نه دستور", h2: "صحنه، نه دستور",
+    body: "نقطه‌ی شروع. Claude عجوله؛ اگه فقط بگی «یه سایت بساز»، یه سایت معمولی می‌گیری. صحنه رو بگو و بگو صبر کنه.",
+    text: `می‌خوام یه سایت شخصی تک‌صفحه‌ای بسازم. قبل از هر کدی، این صحنه رو بخون:
+
+یکی از اینستاگرام روی لینک بایوی من می‌زنه. تو ۱۰ ثانیه‌ی اول باید بفهمه من کی‌ام، چیکار می‌کنم و برای کی. بعد فقط یه کار بکنه: [مثلاً بهم دایرکت بده].
+
+من: [اسم] · کارم: [کار] · برای: [مخاطب] · حسی که باید بگیره: [مثلاً گرم و مطمئن]
+
+قانون‌ها:
+- فارسی و راست‌به‌چپ.
+- اول برای گوشی بساز، بعد دسکتاپ.
+- بدون فریم‌ورک؛ فقط HTML و CSS و کمی JavaScript، که روی GitHub Pages بره.
+
+تا نگفتم «شروع کن»، کد ننویس. اول سه تا سؤال ازم بپرس که صحنه برات واضح‌تر بشه.` },
+  { k: "mobile", lbl: "Prompt 02", nav: "اول گوشی", h2: "اول گوشی",
+    body: "رو همین سایت، نشانِ روی عکس صفحه‌ی اول، رو گوشی افتاده بود روی صورتم. با همین بررسی رفت کنار.",
+    text: `سایتم رو با عرض ۳۷۵ پیکسل (اندازه‌ی گوشی) بررسی کن:
+۱. هر چیزی که از صفحه بیرون می‌زنه یا اسکرول افقی می‌سازه.
+۲. متنی که روی عکس یا روی یه متن دیگه افتاده.
+۳. دکمه‌هایی که از ۴۴ پیکسل کوچیک‌ترن و با انگشت سخت زده می‌شن.
+۴. نوشته‌هایی که رو گوشی از ۱۴ پیکسل ریزتر می‌شن.
+اول لیست مشکل‌ها رو بده. بعد یکی‌یکی درستشون کن و هر بار بگو چی رو عوض کردی.` },
+  { k: "rtl", lbl: "Prompt 03", nav: "فارسی و راست‌به‌چپ", h2: "فارسی و راست‌به‌چپ",
+    body: "فونت نیمکتِ همین سایت تو خود سایته؛ هیچ فونتی از جای دیگه لود نمی‌شه.",
+    text: `سایتم فارسیه. این‌ها رو چک و درست کن:
+۱. همه‌ی صفحه‌ها lang="fa" و dir="rtl" داشته باشن.
+۲. عدد، اسم انگلیسی، ایمیل و شماره تلفن وسط متن فارسی جابه‌جا نشن؛ هر کدوم رو با <bdi> یا dir="ltr" جدا کن.
+۳. فونت فارسی رو بیار تو خود سایت (woff2) که به سرور بیرونی وابسته نباشه.
+۴. نیم‌فاصله‌ها درست باشن («می‌شه»، نه «می شه»).
+بعد صفحه‌ها رو تو اندازه‌ی گوشی چک کن و بگو کجا هنوز به هم ریخته.` },
+  { k: "cache", lbl: "Prompt 04", nav: "نسخه‌ی قدیمی رو گوشی", h2: "وقتی گوشی‌ها نسخه‌ی قدیمی رو نشون می‌دن",
+    body: "رو همین سایت، تغییرها رو گوشی دیده نمی‌شدن تا وقتی به فایل‌ها نسخه زدم.",
+    text: `بعد از هر تغییر، گوشی‌ها هنوز نسخه‌ی قدیمی سایتم رو نشون می‌دن.
+به همه‌ی لینک‌های CSS و JS یه شماره‌ی نسخه اضافه کن (مثلاً style.css?v=20261025) و هر بار که فایلی عوض شد، اون شماره رو همه‌جا با هم عوض کن.
+یه اسکریپت کوچیک هم بنویس که این کار رو خودکار انجام بده.` },
+  { k: "og", lbl: "Prompt 05", nav: "پیش‌نمایش لینک", h2: "پیش‌نمایش لینک تو تلگرام و واتساپ",
+    body: "لینک همین سایت رو هر جا بفرستی، با عکس و امضام باز می‌شه.",
+    text: `وقتی لینک سایتم رو تو تلگرام یا واتساپ می‌فرستم، باید یه کارت با عکس و عنوان نشون بده.
+تگ‌های og:title، og:description، og:image (با آدرس کامل https)، og:url و twitter:card رو به همه‌ی صفحه‌ها اضافه کن.
+عکسش ۱۲۰۰ در ۶۳۰ پیکسل باشه. بعد بگو چطوری تستش کنم.` },
+  { k: "explain", lbl: "Prompt 06", nav: "ساده توضیح بده", h2: "هر چیزی رو ساده توضیح بده",
+    body: "هر آزمایش تو آزمایشگاهِ همین سایت، همین سه تا جعبه رو داره.",
+    text: `زیر هر بخش سایتم، سه تا جعبه‌ی کوچیک بذار:
+«یعنی چی؟»: با زبون ساده، بدون اصطلاح فنی.
+«یه مثال ساده»: یه مثال از زندگی روزمره.
+«به چه دردت می‌خوره؟»: یه جمله که بگه خواننده باهاش چیکار می‌تونه بکنه.
+لحن خودمونی باشه، مثل رفیقی که یه کم جلوتره. کلمه‌های تبلیغاتی مثل «بی‌نظیر» و «کیفیت برتر» ممنوع.` },
+  { k: "theme", lbl: "Prompt 07", nav: "پالت و حالت تاریک", h2: "پالت رنگ و حالت تاریک",
+    body: "کرمی، مشکی، قرمز. دکمه‌ی روشن/تاریکِ پایین همین صفحه، همین کار رو می‌کنه.",
+    text: `همه‌ی رنگ‌های سایتم رو ببر تو متغیرهای CSS روی :root (مثلاً --ink، --paper، --accent).
+بعد یه حالت تاریک بساز که فقط همین متغیرها رو عوض کنه، با یه دکمه که انتخاب آدم رو یادش بمونه.
+کنتراست متن رو تو هر دو حالت چک کن.` },
+];
+const PCARD = (p) => `<div class="viz pc">
+  <pre class="pc-text" id="pr-${p.k}" dir="rtl">${esc(p.text)}</pre>
+  <div class="exp-row"><button class="go sm" type="button" data-copy="pr-${p.k}"><span>کپی پرامپت</span></button><span class="pc-hint">جاهای [ ] رو با مال خودت پر کن.</span></div>
+</div>`;
+
+/* چک‌لیست ۷ روزه — تیک‌ها فقط تو مرورگر خود آدم ذخیره می‌شن */
+const DAYS = [
+  { nav: "یه جمله", h2: "یه جمله: کی هستی و برای کی؟", t: [
+    "یه جمله بنویس: «من [کار]م و به [کی] کمک می‌کنم که [چی].»",
+    "سه تا سایت شخصی که دوستشون داری پیدا کن و بنویس چرا.",
+    "تصمیم بگیر بازدیدکننده بعد از دیدن سایتت فقط چه یه کاری بکنه.",
+  ] },
+  { nav: "محتوا", h2: "محتوا، قبل از طراحی", t: [
+    "یه معرفی کوتاه سه‌خطی بنویس.",
+    "سه تا نمونه‌کار یا خدمت انتخاب کن.",
+    "یه عکس خوب از خودت بگیر، با نور طبیعی.",
+  ] },
+  { nav: "اولین نسخه", h2: "اولین نسخه با Claude", t: [
+    "پرامپت «صحنه، نه دستور» رو کپی کن و جاهای خالیش رو پر کن. <a href=\"tools.html#s1\">پرامپت ←</a>",
+    "به سؤال‌های Claude جواب بده؛ بعد بگو «شروع کن».",
+    "تیکه‌تیکه بساز: اول بالای صفحه، بعد بقیه.",
+  ] },
+  { nav: "گوشی و فارسی", h2: "رو گوشی خودت بازش کن", t: [
+    "سایت رو رو گوشی خودت باز کن و هرچی اذیتت کرد بنویس.",
+    "پرامپت «اول گوشی» رو بده به Claude. <a href=\"tools.html#s2\">پرامپت ←</a>",
+    "پرامپت «فارسی و راست‌به‌چپ» رو بده به Claude. <a href=\"tools.html#s3\">پرامپت ←</a>",
+  ] },
+  { nav: "انتشار", h2: "رو GitHub Pages منتشرش کن", t: [
+    "یه اکانت GitHub بساز.",
+    "یه مخزن بساز، فایل‌ها رو بذار و از Settings ← Pages روشنش کن.",
+    "لینک رو با اینترنت معمولی، بدون فیلترشکن، باز کن.",
+  ] },
+  { nav: "امنیت", h2: "قبل از اینکه نشونش بدی، قفلش کن", t: [
+    "تأیید دومرحله‌ای (2FA) اکانت GitHub رو روشن کن.",
+    "PDF امنیت سایت رو بگیر و دو تا پرامپتش رو اجرا کن. <a href=\"tools.html#s0\">PDF ←</a>",
+    "مطمئن شو هیچ رمز یا کلیدی تو فایل‌های سایت نیست.",
+  ] },
+  { nav: "دنیا ببینه", h2: "بذارش جلوی چشم", t: [
+    "لینک رو بذار تو بایوی اینستاگرامت.",
+    "برای سه نفر بفرست و فقط بپرس: «اولین چیزی که فهمیدی چی بود؟»",
+    "لینکش رو برام دایرکت کن؛ می‌خوام ببینم چی ساختی.",
+  ] },
+];
+const D7_TOTAL = DAYS.reduce((a, d) => a + d.t.length, 0);
+const D7_PROGRESS = `<div class="viz d7p" data-d7p>
+  <p class="d7p-n"><b data-d7-count>۰</b> از ${fa(D7_TOTAL)} کار</p>
+  <p class="d7p-bar" aria-hidden="true"><i data-d7-bar></i></p>
+  <p class="d7p-msg" data-d7-msg>از روز ۱ شروع کن. تیک‌هات همین‌جا می‌مونن.</p>
+  <button type="button" class="chip" data-d7-reset>از اول</button>
+</div>`;
+const D7_DAY = (d, i) => `<ul class="viz d7">${d.t.map((t, j) =>
+  `<li><label class="d7-t"><input type="checkbox" data-d7="d${i + 1}-${j + 1}"><span>${t}</span></label></li>`).join("")}</ul>`;
+
+/* دفترچه‌ی ساخت — از تاریخچه‌ی واقعی گیت همین سایت */
+const LOG = [
+  { d: "۱۴۰۵/۰۸/۰۳", h2: "سایت با برند تازه هم‌قدم شد", items: [
+    ["ساخت", "«ببین چی می‌شه اگه…» جای «معمولی در برابر خلاق» نشست."],
+    ["ساخت", "سایت رزومه، با پیش‌نمایش ده‌ثانیه‌ای و کوییز «لازمش داری؟»."],
+    ["ساخت", "ابزارها: دو PDF رایگان و ۷ پرامپت؛ چک‌لیست ۷ روزه؛ همین دفترچه؛ آزمایش ششم."],
+    ["ساخت", "llms.txt و نسخه‌ی متنی هر صفحه، که AIها هم سایت رو درست بخونن."],
+    ["رفع", "لینک تلگرام درست شد: @itsomidai."],
+  ] },
+  { d: "۱۴۰۵/۰۷/۲۵", h2: "تست: از ایران، بدون فیلترشکن", body: "سایت رو از ایران، با اینترنت معمولی و بدون فیلترشکن باز کردیم. باز شد." },
+  { d: "۱۴۰۵/۰۷/۱۶", h2: "عکس تازه، رنگ‌های تازه", items: [
+    ["ساخت", "عکس تازه برای صفحه‌ی اول، با امضای دست‌نویس."],
+    ["ساخت", "پالت کرمی، مشکی، قرمز."],
+    ["ساخت", "هر آزمایش یه توضیح ساده گرفت: یعنی چی، یه مثال، به چه دردت می‌خوره."],
+    ["رفع", "پیش‌نمایش لینک تو تلگرام و واتساپ درست شد."],
+    ["رفع", "آیدی اینستاگرام شد @itsomid1.ai."],
+  ] },
+  { d: "۱۴۰۵/۰۷/۱۴", h2: "اولین باگ‌های گوشی", items: [
+    ["ساخت", "صفحه‌ی اول متحرک شد و صدای آهنگ آزمایشگاه بلندتر."],
+    ["رفع", "نشانِ روی عکس، رو گوشی افتاده بود روی صورتم؛ رفت کنار."],
+    ["رفع", "گوشی‌ها نسخه‌ی قدیمی رو نشون می‌دادن؛ به فایل‌ها نسخه زدم."],
+    ["یاد گرفتم", "مرورگر گوشی فایل‌ها رو نگه می‌داره؛ تا اسمشون عوض نشه، تازه‌شون نمی‌کنه."],
+  ] },
+  { d: "۱۴۰۵/۰۷/۱۳", h2: "AI × Human Creativity", body: "متن همه‌ی صفحه‌ها از نو نوشته شد، با یه حرف اصلی: AI ابزار منه، خلاقیت مزیت منه." },
+  { d: "۱۴۰۵/۰۶/۲۸", h2: "اولین نسخه", body: "سایت شخصی OMID برای اولین بار بالا اومد. کامل نبود؛ ولی شروع شد." },
+];
+
 /* ───────── قالب صفحه ───────── */
 const page = (p) => `<!doctype html>
 <html lang="fa" dir="rtl" data-theme="light">
@@ -288,14 +561,15 @@ ${p.faq.map((f) => `    <details class="qa"><summary>${f[0]}<span class="mk" ari
 
 <section class="sec cta" data-name="CTA">
   <h2>${p.ctaH}</h2>
-  ${p.cta || '<a class="go" href="contact.html"><span>بیا با هم بسازیم</span><span class="ar">←</span></a>'}
+  ${p.cta || CTA_DEFAULT}
 </section>
 
 ${FOOT}
 ${DOCK(p.file)}
+${TOAST()}
 <div class="blueprint" aria-hidden="true"><div class="bp-cols"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-<script src="app.js?v=20261008b" defer></script>
-${(p.scripts || []).map((s) => `<script src="${s}?v=20261008b" defer></script>`).join("\n")}
+<script src="app.js?v=${V}" defer></script>
+${(p.scripts || []).map((s) => `<script src="${s}?v=${V}" defer></script>`).join("\n")}
 </body>
 </html>
 `;
@@ -303,22 +577,32 @@ ${(p.scripts || []).map((s) => `<script src="${s}?v=20261008b" defer></script>`)
 /* ───────── صفحه‌ها ───────── */
 const PAGES = [
   {
-    file: "vs.html", no: "01", cls: "c1", title: "معمولی در برابر خلاق", kicker: "Ordinary vs Creative",
-    desc: "یه بریف، دو تا نسخه. اولی رو همه با AI می‌سازن. دومی همونیه که آدم‌ها یادشون می‌مونه.",
-    h1: "معمولی در برابر خلاق.",
-    sub: "یه بریف، دو تا نسخه. اولی رو همه با AI می‌سازن. دومی همونیه که آدم‌ها یادشون می‌مونه.",
-    scripts: ["pages.js"],
+    file: "whatif.html", no: "01", cls: "c1", title: "ببین چی می‌شه اگه…", kicker: "What if…",
+    desc: "هر کاری اینجا با یه «اگه» شروع می‌شه؛ بعد می‌سازمش تا ببینم واقعاً چی می‌شه. آخرش هم یه سؤال برای تو.",
+    h1: "ببین چی می‌شه اگه…",
+    sub: "هر کاری اینجا با یه «اگه» شروع می‌شه؛ بعد می‌سازمش تا ببینم واقعاً چی می‌شه. آخرش هم یه سؤال برای تو.",
+    scripts: ["tools.js"],
     sections: [
-      { lbl: "Brief 01", nav: "قاب گوشی", h2: "برای یه فروشگاه قاب گوشی، تبلیغ بساز.", visual: VIS.drop },
-      { lbl: "Brief 02", nav: "آموزشگاه زبان", h2: "برای یه آموزشگاه زبان، پست اینستاگرام بساز.", visual: VIS.menu },
-      { lbl: "Brief 03", nav: "عینک‌فروشی", h2: "برای یه عینک‌فروشی، بنر بساز.", visual: VIS.lens },
+      { lbl: "The loop", nav: "چهار قدم", h2: "همیشه همین چهار قدم", visual: LOOP },
+      { lbl: "Episode · Music", nav: "آهنگ", h2: "ببین چی می‌شه اگه یه آهنگ هر بار عوض بشه؟", visual: EP({
+        built: "به‌جای یه آهنگ آماده، چند تا قانون ساده دادم به کامپیوتر.",
+        wow: "هر بار که دکمه رو بزنی، آهنگی می‌شنوی که هیچ‌کس قبلاً نشنیده.",
+        href: "lab.html#s1", link: "خودت امتحانش کن" }) },
+      { lbl: "Episode · Web", nav: "سایت بدون سرور", h2: "ببین چی می‌شه اگه سایتم رو بدون هزینه‌ی سرور بسازم؟", visual: EP({
+        built: "همین سایت رو با Claude ساختم و گذاشتم رو GitHub Pages.",
+        wow: "هزینه‌ی سرور: صفر. هزینه‌ی دامنه: صفر. از ایران هم بدون فیلترشکن باز می‌شه.",
+        href: "log.html", link: "دفترچه‌ی ساختش" }) },
+      { lbl: "Episode · Instagram", nav: "پیج اینستاگرام", h2: "ببین چی می‌شه اگه Claude پیجم رو بخونه؟", visual: EP({
+        built: "یه بسته‌ی فارسی و اوپن‌سورس ساختم: ۱۳ تا مهارت که پیج اینستاگرام رو بررسی می‌کنن.",
+        wow: "نمره‌ی پروفایلم از ۵۳ رسید به ۷۱.",
+        href: "https://github.com/omidkhavari1708-pixel/instagram-agent-fa", link: "رو گیت‌هاب ببینش", ext: true }) },
+      { lbl: "Your turn", nav: "نوبت تو", h2: "حالا نوبت توئه.", body: "دکمه رو بزن، یه «اگه» بگیر، و فقط یه چیز کوچیک ازش بساز.", visual: WHATIF_GEN },
     ],
     faq: [
-      ["یعنی AI بده؟", "نه. هر دو نسخه رو می‌شه با AI ساخت. فرق از جایی شروع می‌شه که قبل از باز کردنش، چی تو ذهنته."],
-      ["از کجا بفهمم ایده‌م معمولیه؟", "اگه اولین چیزیه که به ذهن همه می‌رسه، احتمالاً معمولیه. از خودت بپرس: اینو قبلاً صد بار دیدم؟"],
-      ["خلاق بودن یعنی عجیب بودن؟", "نه. یعنی یه زاویه‌ی درست. نسخه‌ی خلاق معمولاً ساده‌تره، نه پیچیده‌تر."],
+      ["چرا همیشه با «اگه» شروع می‌کنی؟", "چون «اگه» آدم رو از جواب تکراری بیرون می‌کشه. قبل از اینکه بدونی «چطوری»، می‌پرسی «چی می‌شه»."],
+      ["اگه نتیجه WOW نشد چی؟", "اونم یه نتیجه‌ست. می‌نویسمش و یه «اگه»ی دیگه می‌پرسم. خراب شدن جزو کاره، نه آخرش."],
     ],
-    ctaH: "تو کدوم نسخه رو می‌سازی؟",
+    ctaH: "حالا تو چی می‌سازی؟",
   },
   {
     file: "method.html", no: "02", cls: "c2", title: "فکر، ساخت، اجرا", kicker: "Think → Create → Build",
@@ -343,9 +627,9 @@ const PAGES = [
     desc: "اینجا چیزهایی رو امتحان می‌کنم که هنوز اسم مشخصی ندارن.",
     h1: "آزمایشگاه.",
     sub: "اینجا چیزهایی رو امتحان می‌کنم که هنوز اسم مشخصی ندارن. همه‌ی آزمایش‌ها همین‌جا، تو همین صفحه کار می‌کنن؛ لازم نیست چیزی نصب کنی.",
-    scripts: ["lab.js"],
+    scripts: ["lab.js", "tools.js"],
     sections: [
-      { lbl: "Map", nav: "نقشه‌ی آزمایش‌ها", h2: "پنج تا آزمایش کوچیک", body: "<span class=\"lab-hello\">هرکدوم یه تیکه از AI رو ساده نشون می‌ده. اول باهاش بازی کن، بعد توضیح ساده‌ش رو بخون. روی هر کارت بزنی، می‌ری سراغش.</span>", visual: VIS.board },
+      { lbl: "Map", nav: "نقشه‌ی آزمایش‌ها", h2: "شش تا آزمایش کوچیک", body: "<span class=\"lab-hello\">هرکدوم یه تیکه از AI رو ساده نشون می‌ده. اول باهاش بازی کن، بعد توضیح ساده‌ش رو بخون. روی هر کارت بزنی، می‌ری سراغش.</span>", visual: VIS.board },
       { lbl: "AI × Music", h2: "آهنگی که هر بار عوض می‌شه", visual: LABX({
         no: "01", status: "testing", widget: VIS.music,
         what: "به‌جای اینکه یه آهنگ آماده دانلود کنم، چندتا قانون ساده به کامپیوتر دادم؛ مثلاً «فقط از این پنج تا نت استفاده کن» یا «سر هر ضرب یه کیک بزن». هر بار «یه آهنگ تازه» رو بزنی، با همون قانون‌ها یه آهنگ جدید می‌سازه.",
@@ -376,6 +660,12 @@ const PAGES = [
         example: "مثل خط‌های کم‌رنگ دفتر خوش‌نویسی: آخر کار دیده نمی‌شن، ولی بدون اون‌ها نوشته کج و ناصاف می‌شد.",
         use: "وقتی خودت با AI سایت می‌سازی، می‌فهمی چرا بعضی صفحه‌ها مرتب به نظر میان و بعضی‌ها شلوغ؛ و می‌تونی ازش بخوای همه‌چی رو روی شبکه بچینه.",
       }) },
+      { lbl: "What if", h2: "ببین چی می‌شه اگه…", visual: LABX({
+        no: "06", status: "always", widget: WHATIF_GEN,
+        what: "یه بانک از «اگه»ها؛ هر بار دکمه رو بزنی، یکی‌ش رو تصادفی بهت می‌ده. هر ریلز و هر آزمایش من هم با همین جمله شروع می‌شه.",
+        example: "«ببین چی می‌شه اگه اولین نسخه‌ت عمداً زشت باشه؟» یعنی دیگه منتظر کامل شدن نمی‌مونی؛ امروز می‌سازی، فردا قشنگش می‌کنی.",
+        use: "وقتی گیر کردی و نمی‌دونی چی بسازی. یه «اگه» بگیر، فقط ده دقیقه روش کار کن، و ببین کجا می‌رسی.",
+      }) },
     ],
     faq: [
       ["این آزمایش‌ها واقعی‌ان؟", "آره. همه‌شون همین‌جا، تو همین صفحه کار می‌کنن. چیزی رو نشون نمی‌دم که نشه امتحانش کرد."],
@@ -383,6 +673,7 @@ const PAGES = [
       ["چرا بعضی‌هاش «در حال تست»ه؟", "چون هنوز نمی‌دونم جواب می‌ده یا نه. وقتی فهمیدم، همین‌جا می‌نویسم."],
     ],
     ctaH: "یه ایده برای آزمایش بعدی داری؟",
+    cta: `<div class="cta-row">${DMBTN("تو دایرکت بگو")}</div>`,
   },
   {
     file: "about.html", no: "04", cls: "c4", title: "امید کیه", kicker: "About",
@@ -395,7 +686,7 @@ const PAGES = [
       { lbl: "How I work", h2: "چطور کار می‌کنم", items: [
         ["اول ایده، بعد ابزار", "قبل از باز کردن هر ابزاری، می‌دونم دنبال چی‌ام."],
         ["کمتر حرف، بیشتر تست", "ابزار جدید که میاد، درباره‌ش حرف نمی‌زنم. باهاش یه چیزی می‌سازم؛ بعد اگه ارزش گفتن داشت، می‌گم."],
-        ["معمولی رو کنار خلاق می‌ذارم", "هر کاری رو دو بار می‌بینم: نسخه‌ای که همه می‌سازن، و نسخه‌ای که ارزش ساختن داره."],
+        ["اول یه «اگه» می‌پرسم", "قبل از هر کاری می‌پرسم «ببین چی می‌شه اگه…»؛ بعد می‌سازمش تا ببینم واقعاً چی می‌شه."],
         ["ابزار عوض می‌شه، روش نه", "ابزارها هر ماه عوض می‌شن. فکر کردن قبل از ساختن، نه."],
       ] },
       { lbl: "What I believe", h2: "چیزی که بهش باور دارم", body: "همه می‌تونن با AI محتوا و سایت بسازن، ولی همه نمی‌دونن چی بسازن. <b>AI ابزار منه. خلاقیت مزیت منه.</b>" },
@@ -403,7 +694,7 @@ const PAGES = [
     faq: [
       ["چرا اسم ابزارها رو نمی‌گی؟", "چون هر ماه عوض می‌شن. چیزی که عوض نمی‌شه، اینه که قبل از ساختن چی تو ذهنته."],
       ["کجا بیشتر می‌بینمت؟", "اینستاگرام. هرچی امتحان می‌کنم، اول اونجا میاد."],
-      ["می‌شه با هم چیزی بسازیم؟", "آره. از صفحه‌ی تماس یه پیام بده و بگو تو ذهنت چیه."],
+      ["می‌شه برام سایت بسازی؟", "آره. تو دایرکت اینستاگرام بنویس «رزومه»؛ اول می‌پرسم کارت چیه و برای کیه."],
     ],
     ctaH: "بیا یه چیزی بسازیم",
   },
@@ -444,11 +735,131 @@ const PAGES = [
       ["ایده‌م هنوز کامل نیست. پیام بدم؟", "آره. بیشتر کارهای خوب از یه ایده‌ی نصفه شروع شدن."],
     ],
     ctaH: "منتظرم",
-    cta: '<a class="go" href="https://instagram.com/itsomid1.ai" target="_blank" rel="noopener noreferrer"><span>پیام تو اینستاگرام</span><span class="ar">↗</span></a>',
+    cta: `<div class="cta-row">${DMBTN("پیام تو اینستاگرام")}</div>`,
+  },
+  {
+    file: "resume.html", no: "07", cls: "c2", title: "سایت رزومه", kicker: "One-page resume site",
+    desc: "سایت تک‌صفحه‌ای برای بایوی اینستاگرامت؛ بدون هزینه‌ی سرور و بدون هزینه‌ی دامنه. اول همین‌جا پیش‌نمایشش رو ببین.",
+    h1: "سایت خودت رو تو ۱۰ ثانیه ببین.",
+    sub: "اسم و کارت رو بنویس؛ پیش‌نمایشش همین‌جا ساخته می‌شه. سایت واقعیش تک‌صفحه‌ایه، می‌ره تو بایوی اینستاگرامت، و نه هزینه‌ی سرور داره نه هزینه‌ی دامنه.",
+    scripts: ["tools.js"],
+    sections: [
+      { lbl: "Preview", nav: "پیش‌نمایش", h2: "بنویس، ببین.", visual: PREVIEW },
+      { lbl: "Do you need it", nav: "لازمش داری؟", h2: "سایت لازم داری یا اینستاگرامت کافیه؟", body: "چهار تا سؤال. جوابش ممکنه «نه» باشه؛ اونم جواب درستیه.", visual: QUIZ },
+      { lbl: "How it works", nav: "از دایرکت تا بایو", h2: "از دایرکت تا لینک بایو", items: [
+        ["تو دایرکت بنویس «رزومه»", "می‌پرسم کارت چیه، برای کیه، و آدم‌ها بعد از دیدن سایتت باید چیکار کنن."],
+        ["طرح", "جمله‌ی اصلی، چیدمان و رنگ‌ها رو با هم مشخص می‌کنیم؛ قبل از اینکه چیزی ساخته بشه."],
+        ["ساخت", "سایت رو با Claude می‌سازم و رو گوشی تستش می‌کنیم."],
+        ["لینک بایو", "سایت رو GitHub منتشر می‌شه؛ بدون هزینه‌ی سرور و دامنه. لینکش رو می‌ذاری تو بایو."],
+      ] },
+    ],
+    ctaH: "اینو واقعی می‌خوای؟",
+    cta: `<div class="cta-row">${DMBTN()}</div>`,
+    md: "تو این صفحه یه ابزار هست که با نوشتن اسم و کار، پیش‌نمایش سایت رو همون‌جا تو مرورگر می‌سازه.\n\nکوییز «سایت لازم داری؟»:\n" + QUIZ_Q.map((q) => `- ${q}`).join("\n"),
+  },
+  {
+    file: "tools.html", no: "08", cls: "c3", title: "ابزارها", kicker: "Tools",
+    desc: "PDFها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز.",
+    h1: "ابزارها.",
+    sub: "PDFها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز. هر چیز تازه‌ای که بسازم، اینجا اضافه می‌شه.",
+    scripts: ["tools.js"],
+    sections: [
+      { lbl: "PDF", nav: "PDFها", h2: "راهنماها", visual: PDFCARDS },
+      ...PROMPTS.map((p) => ({ lbl: p.lbl, nav: p.nav, h2: p.h2, body: p.body, visual: PCARD(p) })),
+    ],
+    ctaH: "با کدومش شروع می‌کنی؟",
+    md: PDFS.map((p) => `- ${p.title} (${p.pages} صفحه، PDF): ${SITE}${p.file}`).join("\n") + "\n\n" +
+      PROMPTS.map((p) => `### ${p.h2}\n\n${p.text}`).join("\n\n"),
+  },
+  {
+    file: "7-days.html", no: "09", cls: "c4", title: "سایتت رو تو ۷ روز بساز", kicker: "7-day build",
+    desc: "هر روز سه تا کار کوچیک، تا یه سایت شخصی واقعی تو بایوت. تیک‌هات همین‌جا تو مرورگر خودت می‌مونن.",
+    h1: "سایتت رو تو ۷ روز بساز.",
+    sub: "هر روز سه تا کار کوچیک. تیک‌هات همین‌جا، تو مرورگر خودت می‌مونن؛ فردا که برگردی، از همون‌جا ادامه می‌دی.",
+    scripts: ["tools.js"],
+    sections: [
+      { lbl: "Progress", nav: "پیشرفتت", h2: "تا کجا اومدی؟", visual: D7_PROGRESS },
+      ...DAYS.map((d, i) => ({ lbl: `Day 0${i + 1}`, nav: `روز ${fa(i + 1)} · ${d.nav}`, h2: d.h2, visual: D7_DAY(d, i) })),
+    ],
+    ctaH: "حالا تو چی می‌سازی؟",
+    cta: `<div class="cta-row">${DMBTN("لینک سایتت رو برام بفرست")}<a class="go ghost" href="resume.html"><span>یا بده من بسازم</span><span class="ar">←</span></a></div>`,
+    md: DAYS.map((d, i) => `### روز ${i + 1}: ${d.h2}\n\n` + d.t.map((t) => `- [ ] ${t.replace(/ <a[^>]*>.*?<\/a>/g, "")}`).join("\n")).join("\n\n"),
+  },
+  {
+    file: "log.html", no: "10", cls: "c5", title: "دفترچه‌ی ساخت", kicker: "Build log",
+    desc: "هر تغییر این سایت، با تاریخ؛ اونایی که جواب دادن، و اونایی که خراب شدن.",
+    h1: "دفترچه‌ی ساخت.",
+    sub: "هر تغییر این سایت، با تاریخ؛ اونایی که جواب دادن، و اونایی که خراب شدن. کامل نیست، ولی متوقف هم نمی‌شه.",
+    sections: LOG.map((e) => ({ lbl: e.d, nav: e.d, h2: e.h2, body: e.body, items: e.items })),
+    ctaH: "تو چی می‌سازی؟",
   },
 ];
 
+/* صفحه‌ی قدیمی «معمولی در برابر خلاق» حالا می‌ره سراغ «ببین چی می‌شه اگه…»؛ لینک‌های قبلی خراب نمی‌شن. */
+const REDIRECT = (to) => `<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="${CSP}">
+<meta http-equiv="refresh" content="0; url=${to}">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="${SITE}${to}">
+<title>OMID</title>
+</head>
+<body><p><a href="${to}">ببین چی می‌شه اگه…</a></p></body>
+</html>
+`;
+
+/* نسخه‌ی متنی هر صفحه برای AIها (llms.txt و .md) — از همون داده‌ها، تا هیچ‌وقت از HTML جدا نیفتن */
+const txt = (h) => (h || "").replace(/<br\s*\/?>/g, "\n").replace(/<[^>]+>/g, "").replace(/\s+\n/g, "\n").trim();
+const pageMd = (p) => [
+  `# ${txt(p.h1)}`, txt(p.sub),
+  ...p.sections.map((s) => [`## ${txt(s.h2)}`, txt(s.body),
+    (s.items || []).map((it) => `- **${txt(it[0])}**: ${txt(it[1])}`).join("\n")].filter(Boolean).join("\n\n")),
+  p.md || "",
+  ...(p.faq ? ["## سؤال‌های همیشگی", p.faq.map((f) => `**${txt(f[0])}**\n${txt(f[1])}`).join("\n\n")] : []),
+  `---\nنسخه‌ی کامل: ${SITE}${p.file}\nسایت رزومه می‌خوای؟ تو دایرکت اینستاگرام بنویس «رزومه»: ${DM}`,
+].filter(Boolean).join("\n\n") + "\n";
+
+const LLMS = `# OMID
+
+> امید (OMID) سایت رزومه‌ی تک‌صفحه‌ای با AI می‌سازه؛ برای دکتر، وکیل، مهندس و هر کسی که یه لینک مطمئن برای بایوی اینستاگرامش می‌خواد. سایت‌ها روی GitHub Pages میزبانی می‌شن: بدون هزینه‌ی سرور، بدون هزینه‌ی دامنه، و از ایران بدون فیلترشکن باز می‌شن. سفارش فقط از دایرکت اینستاگرام، با کلمه‌ی «رزومه».
+> OMID builds one-page personal resume websites with AI (Claude) for Persian-speaking professionals, hosted on GitHub Pages with no server or domain cost. Order via Instagram DM (@itsomid1.ai) with the word «رزومه».
+
+امید تو اینستاگرام (@itsomid1.ai) سریال «ببین چی می‌شه اگه…» رو می‌سازه: آزمایش‌های واقعی با AI، و آموزش رایگان سایت‌سازی با Claude. حرف اصلیش: AI ابزاره، خلاقیت مزیته.
+
+## صفحه‌ها
+${PAGES.map((p) => `- [${txt(p.title)}](${SITE}${md(p.file)}): ${txt(p.desc)}`).join("\n")}
+
+## فایل‌های رایگان
+${PDFS.map((p) => `- [${p.title}](${SITE}${p.file}): ${p.what}`).join("\n")}
+
+## تماس
+- دایرکت اینستاگرام (سفارش سایت رزومه، بنویس «رزومه»): ${DM}
+- تلگرام: ${TG}
+`;
+
 let n = 0;
-for (const p of PAGES) { fs.writeFileSync(p.file, page(p)); n++; console.log("✓ " + p.file); }
-console.log(n + " صفحه ساخته شد");
+for (const p of PAGES) {
+  fs.writeFileSync(p.file, page(p));
+  fs.writeFileSync(md(p.file), pageMd(p));
+  n++; console.log("✓ " + p.file);
+}
+fs.writeFileSync("vs.html", REDIRECT("whatif.html"));
+fs.writeFileSync("llms.txt", LLMS);
+fs.writeFileSync("index.md", LLMS);
+
+/* صفحه‌ی اول دست‌نوشته‌ست؛ فقط داک، فوتر، اعلان و نسخه‌ی فایل‌هاش از اینجا به‌روز می‌شن */
+const block = (html, name, body) => {
+  const re = new RegExp(`<!-- build:${name} -->[\\s\\S]*?<!-- /build:${name} -->`);
+  if (!re.test(html)) throw new Error("index.html: نشانه‌ی build:" + name + " پیدا نشد");
+  return html.replace(re, `<!-- build:${name} -->\n${body}\n<!-- /build:${name} -->`);
+};
+let home = fs.readFileSync("index.html", "utf8");
+home = block(home, "foot", FOOT);
+home = block(home, "dock", DOCK("index.html"));
+home = block(home, "news", TOAST());
+home = home.replace(/\?v=\d{8}[a-z]?/g, `?v=${V}`);
+fs.writeFileSync("index.html", home);
+console.log(n + " صفحه + index.html + vs.html + llms.txt + نسخه‌ی متنی ساخته شد");
 module.exports = { HEAD, DOCK, FOOT };

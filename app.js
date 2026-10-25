@@ -243,11 +243,13 @@ document.querySelectorAll(".manifest .ln, .band h1, .sec > h2, .cta > h2, .f-lin
   if (!sec || !reel || !list) return;
 
   const ITEMS = [
-    { href: "vs.html",     cls: "c1" },
-    { href: "method.html", cls: "c2" },
-    { href: "lab.html",    cls: "c3" },
-    { href: "about.html",  cls: "c4" },
-    { href: "why-ai.html", cls: "c5" },
+    { href: "whatif.html", cls: "c1" },
+    { href: "resume.html", cls: "c2" },
+    { href: "tools.html",  cls: "c3" },
+    { href: "7-days.html", cls: "c4" },
+    { href: "lab.html",    cls: "c5" },
+    { href: "about.html",  cls: "c1" },
+    { href: "why-ai.html", cls: "c2" },
   ];
   const li = [...list.children];
   const dotBtns = [...dots.children];
@@ -321,6 +323,31 @@ document.querySelectorAll(".manifest .ln, .band h1, .sec > h2, .cta > h2, .f-lin
   jump(0, false);
   addEventListener("resize", () => jump(idx, false), { passive: true });
   document.fonts?.ready.then(() => jump(idx < 0 ? 0 : idx, false));
+})();
+
+/* ── اعلان «تازه اضافه شد»: هر ورودی تازه یه بار به هر بازدیدکننده نشون داده می‌شه ── */
+(() => {
+  const box = document.querySelector("[data-news]");
+  if (!box) return;
+  const KEY = "omid-news-seen";
+  const id = box.dataset.news;
+  let seen = null;
+  try { seen = localStorage.getItem(KEY); } catch (e) {}
+  if (seen === id) return;
+  const close = () => {
+    try { localStorage.setItem(KEY, id); } catch (e) {}
+    box.classList.remove("on");
+    setTimeout(() => { box.hidden = true; }, reduced() ? 0 : 420);
+  };
+  box.querySelector("[data-news-x]").addEventListener("click", close);
+  box.querySelectorAll("a").forEach((l) => l.addEventListener("click", () => {
+    try { localStorage.setItem(KEY, id); } catch (e) {}
+  }));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !box.hidden) close(); });
+  setTimeout(() => {
+    box.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("on")));
+  }, reduced() ? 0 : 1400);
 })();
 
 ROOT.classList.add("is-ready");
