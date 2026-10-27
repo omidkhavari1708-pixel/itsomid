@@ -18,6 +18,7 @@
 - [دفترچه‌ی ساخت](https://omidkhavari1708-pixel.github.io/itsomid/log.md): هر تغییر این سایت، با تاریخ؛ اونایی که جواب دادن، و اونایی که خراب شدن.
 
 ## فایل‌های رایگان
+- [اسکیل اینستاگرام فارسی](https://omidkhavari1708-pixel.github.io/itsomid/files/omid-insta-agent-fa.pdf): ۱۳ اسکیل فارسی برای Claude که پیجت رو می‌خونن و برات می‌نویسن: بررسی آمار، نمره‌ی پروفایل، ۲۷ فرمول هوک، کپشن و سناریو. نصب، استفاده و سه راه وصل کردن به پیج. خود اسکیل: https://omidkhavari1708-pixel.github.io/itsomid/files/instagram-agent-fa-skill.zip
 - [امنیت سایت · قدم ۳](https://omidkhavari1708-pixel.github.io/itsomid/files/omid-amniat-site.pdf): دو پرامپت آماده، شش اسکیل و ابزار امنیتی، و چک‌لیست ۱۵ دقیقه‌ای برای قفل کردن سایتی که با AI ساختی.
 - [موشن‌گرافیک با Claude](https://omidkhavari1708-pixel.github.io/itsomid/files/omid-motion-claude.pdf): همون سیستمی که موشن‌های ریلزهام باهاش ساخته می‌شن؛ از متن و ثانیه‌بندی تا رندر، صدا و ترفندهای کیفیت.
 

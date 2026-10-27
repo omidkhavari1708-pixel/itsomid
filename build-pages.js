@@ -7,7 +7,7 @@ const fs = require("fs");
 const CSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests";
 
 /* نسخه‌ی فایل‌ها: هر بار CSS یا JS عوض شد، این عدد رو عوض کن تا گوشی‌ها نسخه‌ی تازه رو بگیرن. */
-const V = "20261025";
+const V = "20261027";
 const SITE = "https://omidkhavari1708-pixel.github.io/itsomid/";
 const DM = "https://ig.me/m/itsomid1.ai";
 const TG = "https://t.me/itsomidai";
@@ -87,6 +87,9 @@ const FOOT = `<footer class="foot">
    هر چیز تازه‌ای که به سایت اضافه می‌شه، فقط با تأیید امید اینجا میاد.
    بالاترین ورودی همونیه که به بازدیدکننده نشون داده می‌شه؛ هر کی یه بار ببندتش، تا ورودی بعدی دیگه نمی‌بینه. */
 const NEWS = [
+  { id: "1405-08-05", items: [
+    ["tools.html#s0", "اسکیل اینستاگرام فارسی: PDF راهنما و خود اسکیل، رایگان"],
+  ] },
   { id: "1405-08-03", items: [
     ["tools.html", "ابزارها: دو PDF رایگان و ۷ پرامپت"],
     ["resume.html", "سایت خودت رو تو ۱۰ ثانیه ببین"],
@@ -367,6 +370,9 @@ const QUIZ = `<div class="viz quiz" data-quiz>
 
 /* ابزارها: PDFها (دانلود مستقیم) و پرامپت‌ها (کپی) */
 const PDFS = [
+  { file: "files/omid-insta-agent-fa.pdf", title: "اسکیل اینستاگرام فارسی", pages: 11, size: "۵۶۰KB", tag: "INSTAGRAM",
+    what: "۱۳ اسکیل فارسی برای Claude که پیجت رو می‌خونن و برات می‌نویسن: بررسی آمار، نمره‌ی پروفایل، ۲۷ فرمول هوک، کپشن و سناریو. نصب، استفاده و سه راه وصل کردن به پیج.",
+    skill: { zip: "files/instagram-agent-fa-skill.zip", size: "۱۳۰KB", gh: "https://github.com/omidkhavari1708-pixel/instagram-agent-fa" } },
   { file: "files/omid-amniat-site.pdf", title: "امنیت سایت · قدم ۳", pages: 11, size: "۴۸۰KB", tag: "SECURITY",
     what: "دو پرامپت آماده، شش اسکیل و ابزار امنیتی، و چک‌لیست ۱۵ دقیقه‌ای برای قفل کردن سایتی که با AI ساختی." },
   { file: "files/omid-motion-claude.pdf", title: "موشن‌گرافیک با Claude", pages: 23, size: "۱MB", tag: "MOTION",
@@ -375,7 +381,8 @@ const PDFS = [
 const PDFCARDS = `<ul class="viz pdfs">${PDFS.map((p) => `
   <li class="pdf"><span class="pdf-tag en">${p.tag}</span><h3>${p.title}</h3><p>${p.what}</p>
     <p class="pdf-meta">${fa(p.pages)} صفحه · ${p.size} · رایگان</p>
-    <a class="go sm" href="${p.file}" download><span>دانلود PDF</span><span class="ar">↓</span></a></li>`).join("")}
+    <div class="pdf-acts"><a class="go sm" href="${p.file}" download><span>دانلود PDF</span><span class="ar">↓</span></a>${p.skill ? `<a class="go sm ghost" href="${p.skill.zip}" download><span>دانلود اسکیل</span><span class="ar">↓</span></a>` : ""}</div>
+    ${p.skill ? `<p class="pdf-meta">اسکیل: فایل ZIP · ${p.skill.size} · <a href="${p.skill.gh}" target="_blank" rel="noopener noreferrer">کدش روی گیت‌هاب</a></p>` : ""}</li>`).join("")}
 </ul>`;
 
 const PROMPTS = [
@@ -487,6 +494,9 @@ const D7_DAY = (d, i) => `<ul class="viz d7">${d.t.map((t, j) =>
 
 /* دفترچه‌ی ساخت — از تاریخچه‌ی واقعی گیت همین سایت */
 const LOG = [
+  { d: "۱۴۰۵/۰۸/۰۵", h2: "اسکیل اینستاگرام اومد تو ابزارها", items: [
+    ["ساخت", "PDF راهنمای اسکیل اینستاگرام فارسی، همراه با خود اسکیل برای دانلود مستقیم."],
+  ] },
   { d: "۱۴۰۵/۰۸/۰۳", h2: "سایت با برند تازه هم‌قدم شد", items: [
     ["ساخت", "«ببین چی می‌شه اگه…» جای «معمولی در برابر خلاق» نشست."],
     ["ساخت", "سایت رزومه، با پیش‌نمایش ده‌ثانیه‌ای و کوییز «لازمش داری؟»."],
@@ -761,14 +771,14 @@ const PAGES = [
     file: "tools.html", no: "08", cls: "c3", title: "ابزارها", kicker: "Tools",
     desc: "PDFها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز.",
     h1: "ابزارها.",
-    sub: "PDFها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز. هر چیز تازه‌ای که بسازم، اینجا اضافه می‌شه.",
+    sub: "PDFها، اسکیل‌ها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز. هر چیز تازه‌ای که بسازم، اینجا اضافه می‌شه.",
     scripts: ["tools.js"],
     sections: [
       { lbl: "PDF", nav: "PDFها", h2: "راهنماها", visual: PDFCARDS },
       ...PROMPTS.map((p) => ({ lbl: p.lbl, nav: p.nav, h2: p.h2, body: p.body, visual: PCARD(p) })),
     ],
     ctaH: "با کدومش شروع می‌کنی؟",
-    md: PDFS.map((p) => `- ${p.title} (${p.pages} صفحه، PDF): ${SITE}${p.file}`).join("\n") + "\n\n" +
+    md: PDFS.map((p) => `- ${p.title} (${p.pages} صفحه، PDF): ${SITE}${p.file}${p.skill ? ` · خود اسکیل (ZIP): ${SITE}${p.skill.zip} · گیت‌هاب: ${p.skill.gh}` : ""}`).join("\n") + "\n\n" +
       PROMPTS.map((p) => `### ${p.h2}\n\n${p.text}`).join("\n\n"),
   },
   {
@@ -832,7 +842,7 @@ const LLMS = `# OMID
 ${PAGES.map((p) => `- [${txt(p.title)}](${SITE}${md(p.file)}): ${txt(p.desc)}`).join("\n")}
 
 ## فایل‌های رایگان
-${PDFS.map((p) => `- [${p.title}](${SITE}${p.file}): ${p.what}`).join("\n")}
+${PDFS.map((p) => `- [${p.title}](${SITE}${p.file}): ${p.what}${p.skill ? ` خود اسکیل: ${SITE}${p.skill.zip}` : ""}`).join("\n")}
 
 ## تماس
 - دایرکت اینستاگرام (سفارش سایت رزومه، بنویس «رزومه»): ${DM}

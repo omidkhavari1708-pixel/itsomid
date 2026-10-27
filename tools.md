@@ -1,6 +1,6 @@
 # ابزارها.
 
-PDFها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز. هر چیز تازه‌ای که بسازم، اینجا اضافه می‌شه.
+PDFها، اسکیل‌ها و پرامپت‌هایی که خودم باهاشون کار می‌کنم. رایگانن؛ دانلود کن، کپی کن، بساز. هر چیز تازه‌ای که بسازم، اینجا اضافه می‌شه.
 
 ## راهنماها
 
@@ -32,6 +32,7 @@ PDFها و پرامپت‌هایی که خودم باهاشون کار می‌ک
 
 کرمی، مشکی، قرمز. دکمه‌ی روشن/تاریکِ پایین همین صفحه، همین کار رو می‌کنه.
 
+- اسکیل اینستاگرام فارسی (11 صفحه، PDF): https://omidkhavari1708-pixel.github.io/itsomid/files/omid-insta-agent-fa.pdf · خود اسکیل (ZIP): https://omidkhavari1708-pixel.github.io/itsomid/files/instagram-agent-fa-skill.zip · گیت‌هاب: https://github.com/omidkhavari1708-pixel/instagram-agent-fa
 - امنیت سایت · قدم ۳ (11 صفحه، PDF): https://omidkhavari1708-pixel.github.io/itsomid/files/omid-amniat-site.pdf
 - موشن‌گرافیک با Claude (23 صفحه، PDF): https://omidkhavari1708-pixel.github.io/itsomid/files/omid-motion-claude.pdf
 

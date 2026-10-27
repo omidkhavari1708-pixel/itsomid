@@ -985,6 +985,8 @@ html.theming::view-transition-new(root){z-index:2}
 .pdfs .pdf p{font-size:14px;line-height:2;color:var(--dim)}
 .pdfs .pdf .pdf-meta{font-size:12px;color:var(--ink)}
 .pdf .go{justify-self:start;position:relative;z-index:1}
+.pdf-acts{display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+.pdf-meta a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
 /* کارت پرامپت */
 .pc{display:grid;gap:14px}
